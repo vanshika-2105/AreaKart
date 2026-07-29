@@ -2,14 +2,20 @@ import ResultCard from "./ResultCard";
 
 interface Props {
   services: string[];
+   hasSearched: boolean;
 }
 
-export default function Results({ services }: Props) {
- if (services.length === 0) {
+export default function Results({ 
+  services, hasSearched }: Props) {
+ if (!hasSearched) {
+  return null;
+}
+
+if (services.length === 0) {
   return (
-    <div className="mt-10 text-center text-gray-500">
+    <p className="text-center text-gray-500 mt-8">
       No delivery services found for this PIN code.
-    </div>
+    </p>
   );
 }
 

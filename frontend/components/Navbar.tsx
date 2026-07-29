@@ -13,9 +13,12 @@ export default function Navbar() {
             Home
           </button>
 
-          <button className="hover:text-green-600">
-            About
-          </button>
+   <a
+  href="#about"
+  className="hover:text-green-600 transition"
+>
+  About
+</a>
 
           <button className="hover:text-green-600">
             Contact

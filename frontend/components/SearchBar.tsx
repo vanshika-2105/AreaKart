@@ -10,6 +10,7 @@ export default function SearchBar() {
   const [pincode, setPincode] = useState("");
   const [services, setServices] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+  const [hasSearched, setHasSearched] = useState(false);
 
   const { history, addSearch, clearHistory } = useSearchHistory();
 
@@ -28,6 +29,7 @@ export default function SearchBar() {
 
       setPincode(searchPin);
       setServices(data.services);
+      setHasSearched(true);
 
       // Save successful search
       addSearch(searchPin);
@@ -41,7 +43,9 @@ export default function SearchBar() {
   }
 
   return (
-    <div className="mt-10 flex flex-col items-center gap-4">
+    <div 
+    id="search"
+    className="mt-10 flex flex-col items-center gap-4">
       <input
         type="text"
         placeholder="Enter your PIN Code"
@@ -64,7 +68,10 @@ export default function SearchBar() {
         onClear={clearHistory}
       />
 
-      <Results services={services} />
+      <Results
+  services={services}
+  hasSearched={hasSearched}
+/>
     </div>
   );
 }
