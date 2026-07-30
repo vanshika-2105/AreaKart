@@ -5,10 +5,14 @@ import { searchPincode } from "@/services/api";
 import Results from "./Results";
 import SearchHistory from "./SearchHistory";
 import useSearchHistory from "../hooks/useSearchHistory";
+import { deliveryInfo } from "@/lib/deliveryServices";
 
 export default function SearchBar() {
   const [pincode, setPincode] = useState("");
   const [services, setServices] = useState<string[]>([]);
+  const [sortBy, setSortBy] = useState<
+  "default" | "rating" | "eta" | "fee"
+>("default");
   const [location, setLocation] = useState({
   city: "",
   state: "",
@@ -69,6 +73,37 @@ setHasSearched(true);
   const coverageScore = Math.round(
   (services.length / TOTAL_APPS) * 100
 );
+const sortedServices = [...services];
+
+if (sortBy === "rating") {
+  sortedServices.sort(
+    (a, b) => deliveryInfo[b].rating - deliveryInfo[a].rating
+  );
+}
+
+if (sortBy === "eta") {
+  sortedServices.sort(
+    (a, b) =>
+      parseInt(deliveryInfo[a].eta) -
+      parseInt(deliveryInfo[b].eta)
+  );
+}
+
+if (sortBy === "fee") {
+  sortedServices.sort((a, b) => {
+    const feeA =
+      deliveryInfo[a].deliveryFee === "Free"
+        ? 0
+        : parseInt(deliveryInfo[a].deliveryFee.replace(/\D/g, ""));
+
+    const feeB =
+      deliveryInfo[b].deliveryFee === "Free"
+        ? 0
+        : parseInt(deliveryInfo[b].deliveryFee.replace(/\D/g, ""));
+
+    return feeA - feeB;
+  });
+}
 
   return (
     <div 
@@ -95,7 +130,11 @@ setHasSearched(true);
       <button
         onClick={() => handleSearch()}
         disabled={loading}
-        className="rounded-xl bg-green-600 px-8 py-4 text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:bg-gray-400"
+        className={`rounded-lg px-4 py-2 transition ${
+  sortBy === "default"
+    ? "bg-green-600 text-white"
+    : "bg-gray-200 hover:bg-gray-300"
+}`}
       >
         {loading ? "Searching..." : "Search"}
       </button>
@@ -134,9 +173,52 @@ setHasSearched(true);
     </p>
   </div>
 )}
+{hasSearched && services.length > 0 && (
+  <div className="mt-6 flex flex-wrap justify-center gap-3">
+    <button
+      onClick={() => setSortBy("default")}
+      className="rounded-lg bg-gray-200 px-4 py-2 hover:bg-gray-300"
+    >
+      Default
+    </button>
+
+    <button
+      onClick={() => setSortBy("rating")}
+      className={`rounded-lg px-4 py-2 transition ${
+  sortBy === "rating"
+    ? "bg-yellow-500 text-white"
+    : "bg-yellow-300 hover:bg-yellow-400"
+}`}
+    >
+      ⭐ Highest Rated
+    </button>
+
+    <button
+      onClick={() => setSortBy("eta")}
+      className={`rounded-lg px-4 py-2 transition ${
+  sortBy === "eta"
+    ? "bg-blue-700 text-white"
+    : "bg-blue-500 text-white hover:bg-blue-600"
+}`}
+    >
+      ⚡ Fastest
+    </button>
+
+    <button
+      onClick={() => setSortBy("fee")}
+      className={`rounded-lg px-4 py-2 transition ${
+  sortBy === "fee"
+    ? "bg-green-800 text-white"
+    : "bg-green-600 text-white hover:bg-green-700"
+}`}
+    >
+      💰 Cheapest
+    </button>
+  </div>
+)}
 
       <Results
-  services={services}
+  services={sortedServices}
   hasSearched={hasSearched}
 />
     </div>
