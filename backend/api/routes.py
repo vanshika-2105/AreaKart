@@ -8,10 +8,20 @@ router = APIRouter()
 
 @router.post("/search")
 def search(request: SearchRequest):
+    result = get_available_services(request.pincode)
 
-    services = get_available_services(request.pincode)
+    if result is None:
+     return {
+        "pincode": request.pincode,
+        "city": "",
+        "state": "",
+        "services": [],
+        "message": "No delivery services found for this PIN code."
+    }
 
     return {
         "pincode": request.pincode,
-        "services": services
+        "city": result["city"],
+        "state": result["state"],
+        "services": result["services"]
     }

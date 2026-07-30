@@ -1,18 +1,5 @@
-def get_available_services(pincode: str):
-    sample_database = {
-        "250002": [
-            "Blinkit",
-            "Zepto",
-            "Instamart"
-        ],
-        "110001": [
-            "Blinkit",
-            "BigBasket"
-        ],
-        "560001": [
-            "Zepto",
-            "Swiggy Instamart"
-        ]
-    }
+from services.search_service import search_pincode
 
-    return sample_database.get(pincode, [])
+
+def get_available_services(pincode: str):
+    return search_pincode(pincode)

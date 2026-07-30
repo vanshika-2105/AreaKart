@@ -1,4 +1,5 @@
 import ResultCard from "./ResultCard";
+import BestAppSummary from "./BestAppSummary";
 
 interface Props {
   services: string[];
@@ -24,6 +25,7 @@ if (services.length === 0) {
       <h2 className="text-2xl font-bold">
         Available Delivery Services
       </h2>
+      <BestAppSummary services={services} />
 
       {services.map((service) => (
         <ResultCard key={service} name={service} />

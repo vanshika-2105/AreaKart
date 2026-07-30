@@ -3,7 +3,7 @@ export default function Hero() {
     <section className="flex flex-col items-center justify-center text-center px-6 py-24">
       <a
   href="#search"
-  className="inline-block mt-8 bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-4 rounded-2xl shadow-lg transition-all duration-300 hover:scale-105"
+  className="inline-block mt-8 md - 12 bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-4 rounded-2xl shadow-lg transition-all duration-300 hover:scale-105"
 >
   🚀 Check Availability
 </a>
