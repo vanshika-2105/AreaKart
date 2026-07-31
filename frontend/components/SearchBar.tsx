@@ -13,6 +13,12 @@ export default function SearchBar() {
   const [sortBy, setSortBy] = useState<
   "default" | "rating" | "eta" | "fee"
 >("default");
+  const [filters, setFilters] = useState({
+  freeDelivery: false,
+  bestChoice: false,
+  rating45: false,
+  eta15: false,
+});
   const [location, setLocation] = useState({
   city: "",
   state: "",
@@ -104,6 +110,32 @@ if (sortBy === "fee") {
     return feeA - feeB;
   });
 }
+let filteredServices = [...sortedServices];
+
+if (filters.freeDelivery) {
+  filteredServices = filteredServices.filter(
+    (service) => deliveryInfo[service].deliveryFee === "Free"
+  );
+}
+
+if (filters.bestChoice) {
+  filteredServices = filteredServices.filter(
+    (service) => deliveryInfo[service].bestChoice
+  );
+}
+
+if (filters.rating45) {
+  filteredServices = filteredServices.filter(
+    (service) => deliveryInfo[service].rating >= 4.5
+  );
+}
+
+if (filters.eta15) {
+  filteredServices = filteredServices.filter(
+    (service) =>
+      parseInt(deliveryInfo[service].eta) <= 15
+  );
+}
 
   return (
     <div 
@@ -153,6 +185,90 @@ if (sortBy === "fee") {
     <p className="text-gray-600">
       PIN: {location.pincode}
     </p>
+  </div>
+)}
+{hasSearched && services.length > 0 && (
+  <div className="mt-4 flex flex-wrap justify-center gap-3">
+    <button
+      onClick={() =>
+        setFilters({
+          ...filters,
+          freeDelivery: !filters.freeDelivery,
+        })
+      }
+      className={`rounded-lg px-4 py-2 transition ${
+        filters.freeDelivery
+          ? "bg-green-600 text-white"
+          : "bg-gray-200 hover:bg-gray-300"
+      }`}
+    >
+      🚚 Free Delivery
+    </button>
+
+    <button
+      onClick={() =>
+        setFilters({
+          ...filters,
+          bestChoice: !filters.bestChoice,
+        })
+      }
+      className={`rounded-lg px-4 py-2 transition ${
+        filters.bestChoice
+          ? "bg-yellow-500 text-white"
+          : "bg-gray-200 hover:bg-gray-300"
+      }`}
+    >
+      ⭐ Best Choice
+    </button>
+    {hasSearched && (
+  <button
+    onClick={() => {
+      setFilters({
+        freeDelivery: false,
+        bestChoice: false,
+        rating45: false,
+        eta15: false,
+      });
+
+      setSortBy("default");
+    }}
+    className="mt-4 rounded-lg bg-red-500 px-5 py-2 text-white transition hover:bg-red-600"
+  >
+    🔄 Clear Filters & Sorting
+  </button>
+)}
+
+    <button
+      onClick={() =>
+        setFilters({
+          ...filters,
+          rating45: !filters.rating45,
+        })
+      }
+      className={`rounded-lg px-4 py-2 transition ${
+        filters.rating45
+          ? "bg-blue-600 text-white"
+          : "bg-gray-200 hover:bg-gray-300"
+      }`}
+    >
+      ⭐ Rating 4.5+
+    </button>
+
+    <button
+      onClick={() =>
+        setFilters({
+          ...filters,
+          eta15: !filters.eta15,
+        })
+      }
+      className={`rounded-lg px-4 py-2 transition ${
+        filters.eta15
+          ? "bg-purple-600 text-white"
+          : "bg-gray-200 hover:bg-gray-300"
+      }`}
+    >
+      ⚡ ETA &lt; 15 mins
+    </button>
   </div>
 )}
 {hasSearched && (
@@ -218,7 +334,7 @@ if (sortBy === "fee") {
 )}
 
       <Results
-  services={sortedServices}
+  services={filteredServices}
   hasSearched={hasSearched}
 />
     </div>
