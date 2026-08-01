@@ -1,6 +1,7 @@
 import ResultCard from "./ResultCard";
 import BestAppSummary from "./BestAppSummary";
 import ComparisonTable from "./ComparisonTable";
+import DeliveryInsights from "./DeliveryInsights";
 interface Props {
   services: string[];
    hasSearched: boolean;
@@ -27,6 +28,8 @@ if (services.length === 0) {
       </h2>
 
       <BestAppSummary services={services} />
+
+      <DeliveryInsights services={services} />
 
       {services.map((service) => (
         <ResultCard key={service} name={service} />
