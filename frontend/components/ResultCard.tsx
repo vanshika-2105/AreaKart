@@ -11,71 +11,91 @@ export default function ResultCard({ name }: Props) {
   if (!info) return null;
 
   return (
-    <div className="bg-white rounded-3xl shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 p-6 flex flex-col gap-5">
+    <div className="rounded-3xl bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
 
-      {/* Top */}
-      <div className="flex justify-between items-start">
-        <div className="flex gap-4">
+      {/* Header */}
+      <div className="flex items-start justify-between">
+
+        <div className="flex items-center gap-4">
+
           <Image
             src={info.logo}
             alt={name}
-            width={70}
-            height={70}
-            className="rounded-xl object-contain"
+            width={72}
+            height={72}
+            className="h-auto rounded-xl object-contain"
           />
 
           <div>
-            <h2 className={`text-4xl font-bold ${info.color}`}>
+            <h2 className={`text-3xl font-bold ${info.color}`}>
               {name}
             </h2>
 
-            <p className="text-gray-500">
+            <p className="mt-1 text-gray-500">
               {info.description}
             </p>
           </div>
+
         </div>
 
-        <div className="text-yellow-500 font-bold text-lg">
+        <div className="text-xl font-bold text-yellow-500">
           ⭐ {info.rating}
         </div>
-      </div>
-
-      {/* Details */}
-      <div className="grid grid-cols-3 gap-4 text-sm">
-
-        <div className="bg-gray-100 rounded-xl p-3">
-          <p className="text-gray-500">Delivery</p>
-          <p className="font-semibold">
-            🚚 {info.deliveryFee}
-          </p>
-        </div>
-
-        <div className="bg-gray-100 rounded-xl p-3">
-          <p className="text-gray-500">ETA</p>
-          <p className="font-semibold">
-            ⏱ {info.eta}
-          </p>
-        </div>
-
-        <div className="bg-gray-100 rounded-xl p-3">
-          <p className="text-gray-500">Min Order</p>
-          <p className="font-semibold">
-            💰 {info.minOrder}
-          </p>
-        </div>
 
       </div>
 
-      {info.bestChoice && (
-        <div className="bg-yellow-100 text-yellow-800 font-semibold rounded-full px-4 py-2 w-fit">
-          🏆 Best Choice
+      {/* Badges */}
+      <div className="mt-6 flex flex-wrap gap-3">
+
+        {info.bestChoice && (
+          <span className="rounded-full bg-yellow-100 px-4 py-2 text-sm font-semibold text-yellow-700">
+            🏆 Best Choice
+          </span>
+        )}
+
+        {info.deliveryFee === "Free" && (
+          <span className="rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700">
+            🚚 Free Delivery
+          </span>
+        )}
+
+        {parseInt(info.eta) <= 15 && (
+          <span className="rounded-full bg-blue-100 px-4 py-2 text-sm font-semibold text-blue-700">
+            ⚡ Fast Delivery
+          </span>
+        )}
+
+      </div>
+
+      {/* Information Cards */}
+      <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-4">
+
+        <div className="rounded-xl bg-gray-100 p-4 text-center">
+          <p className="text-sm text-gray-500">⭐ Rating</p>
+          <p className="mt-1 font-bold">{info.rating}</p>
         </div>
-      )}
 
-      {/* Bottom */}
-      <div className="flex justify-between items-center">
+        <div className="rounded-xl bg-gray-100 p-4 text-center">
+          <p className="text-sm text-gray-500">⚡ ETA</p>
+          <p className="mt-1 font-bold">{info.eta}</p>
+        </div>
 
-        <span className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-semibold">
+        <div className="rounded-xl bg-gray-100 p-4 text-center">
+          <p className="text-sm text-gray-500">🚚 Delivery Fee</p>
+          <p className="mt-1 font-bold">{info.deliveryFee}</p>
+        </div>
+
+        <div className="rounded-xl bg-gray-100 p-4 text-center">
+          <p className="text-sm text-gray-500">🛒 Min Order</p>
+          <p className="mt-1 font-bold">{info.minOrder}</p>
+        </div>
+
+      </div>
+
+      {/* Footer */}
+      <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+        <span className="rounded-full bg-green-100 px-5 py-2 font-semibold text-green-700">
           ✅ Available
         </span>
 
@@ -83,9 +103,9 @@ export default function ResultCard({ name }: Props) {
           href={info.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-green-600 hover:bg-green-700 transition px-6 py-3 rounded-xl text-white font-semibold"
+          className="rounded-xl bg-green-600 px-8 py-3 text-center font-semibold text-white transition hover:bg-green-700"
         >
-          Open App
+          Open {name}
         </a>
 
       </div>
