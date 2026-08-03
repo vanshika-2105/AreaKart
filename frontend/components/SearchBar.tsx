@@ -6,6 +6,7 @@ import Results from "./Results";
 import SearchHistory from "./SearchHistory";
 import useSearchHistory from "../hooks/useSearchHistory";
 import { deliveryInfo } from "@/lib/deliveryServices";
+import useFavorites from "@/hooks/useFavorites";
 
 export default function SearchBar() {
   const [pincode, setPincode] = useState("");
@@ -30,7 +31,7 @@ export default function SearchBar() {
   const [error, setError] = useState("");
 
   const { history, addSearch, clearHistory } = useSearchHistory();
-
+  const { favorites, toggleFavorite, isFavorite } = useFavorites();
   async function handleSearch(pin?: string) {
     const searchPin = pin ?? pincode;
 
@@ -68,11 +69,18 @@ setServices(data.services ?? []);
 setHasSearched(true);
       // Save successful search
       addSearch(searchPin);
-    } catch (error) {
-      console.error(error);
-      alert("Something went wrong.");
-      setServices([]);
-    } finally {
+    } catch (error: any) {
+  console.error(error);
+
+  if (error instanceof Error) {
+    alert(error.message);
+  } else {
+    alert("Unknown error");
+  }
+
+  setServices([]);
+}
+  finally {
       setLoading(false);
     }
   }
@@ -333,10 +341,12 @@ if (filters.eta15) {
   </div>
 )}
 
-      <Results
+     <Results
   services={filteredServices}
   hasSearched={hasSearched}
-/>
-    </div>
+  favorites={favorites}
+  isFavorite={isFavorite}
+  toggleFavorite={toggleFavorite}
+/>  </div>
   );
 }
