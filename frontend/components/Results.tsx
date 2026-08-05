@@ -25,7 +25,7 @@ export default function Results({
 
   if (services.length === 0) {
     return (
-      <p className="mt-8 text-center text-gray-500">
+      <p className="mt-8 text-center text-gray-500 dark:text-gray-400">
         No delivery services found for this PIN code.
       </p>
     );

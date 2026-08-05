@@ -34,7 +34,7 @@ Longitude: ${position.coords.longitude}`
       onClick={getLocation}
       className="
       mt-5
-      bg-white
+      bg-white dark:bg-slate-800
       border
       border-green-600
       text-green-600

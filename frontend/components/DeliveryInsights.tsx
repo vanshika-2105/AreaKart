@@ -14,16 +14,25 @@ export default function DeliveryInsights({ services }: Props) {
     }))
     .filter(Boolean);
 
-  const bestRated = [...apps].sort((a, b) => b.rating - a.rating)[0];
+  const bestRated = [...apps].sort(
+    (a, b) => b.rating - a.rating
+  )[0];
 
   const fastest = [...apps].sort(
-    (a, b) =>
-      parseInt(a.eta) - parseInt(b.eta)
+    (a, b) => parseInt(a.eta) - parseInt(b.eta)
   )[0];
 
   const cheapest = [...apps].sort((a, b) => {
-    const feeA = a.deliveryFee === "Free" ? 0 : parseInt(a.deliveryFee.replace("₹", ""));
-    const feeB = b.deliveryFee === "Free" ? 0 : parseInt(b.deliveryFee.replace("₹", ""));
+    const feeA =
+      a.deliveryFee === "Free"
+        ? 0
+        : parseInt(a.deliveryFee.replace(/\D/g, ""));
+
+    const feeB =
+      b.deliveryFee === "Free"
+        ? 0
+        : parseInt(b.deliveryFee.replace(/\D/g, ""));
+
     return feeA - feeB;
   })[0];
 
@@ -34,45 +43,72 @@ export default function DeliveryInsights({ services }: Props) {
   else if (services.length >= 2) coverage = "Average";
 
   return (
-    <div className="mt-8 rounded-3xl bg-white p-6 shadow-lg">
-      <h2 className="mb-6 text-2xl font-bold">
+    <div className="mt-8 rounded-3xl border border-gray-200 bg-white dark:bg-slate-800 p-6 shadow-lg transition-all duration-300 dark:border-slate-700 dark:bg-slate-800">
+      <h2 className="mb-6 text-3xl font-bold text-gray-900 dark:text-white dark:text-white">
         📊 Delivery Insights
       </h2>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-5 md:grid-cols-2">
 
-        <div className="rounded-xl bg-gray-100 p-4">
-          <p className="text-gray-500">Apps Available</p>
-          <p className="text-xl font-bold">
+        <div className="rounded-2xl bg-gray-100 p-5 text-center transition-all duration-300 hover:shadow-lg dark:bg-slate-700">
+          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+            Apps Available
+          </p>
+
+          <p className="mt-2 text-3xl font-bold text-green-600">
             {services.length}
           </p>
         </div>
 
-        <div className="rounded-xl bg-gray-100 p-4">
-          <p className="text-gray-500">Coverage</p>
-          <p className="text-xl font-bold">
+        <div className="rounded-2xl bg-gray-100 p-5 text-center transition-all duration-300 hover:shadow-lg dark:bg-slate-700">
+          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+            Coverage
+          </p>
+
+          <p className="mt-2 text-3xl font-bold text-blue-600">
             {coverage}
           </p>
         </div>
 
-        <div className="rounded-xl bg-gray-100 p-4">
-          <p className="text-gray-500">🏆 Best Rated</p>
-          <p className="font-bold">
+        <div className="rounded-2xl bg-gray-100 p-5 text-center transition-all duration-300 hover:shadow-lg dark:bg-slate-700">
+          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+            🏆 Best Rated
+          </p>
+
+          <p className="mt-2 text-xl font-bold text-yellow-600">
             {bestRated.name}
           </p>
-        </div>
 
-        <div className="rounded-xl bg-gray-100 p-4">
-          <p className="text-gray-500">⚡ Fastest</p>
-          <p className="font-bold">
-            {fastest.name}
+          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+            ⭐ {bestRated.rating}
           </p>
         </div>
 
-        <div className="rounded-xl bg-gray-100 p-4 md:col-span-2">
-          <p className="text-gray-500">💰 Cheapest</p>
-          <p className="font-bold">
+        <div className="rounded-2xl bg-gray-100 p-5 text-center transition-all duration-300 hover:shadow-lg dark:bg-slate-700">
+          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+            ⚡ Fastest
+          </p>
+
+          <p className="mt-2 text-xl font-bold text-green-600">
+            {fastest.name}
+          </p>
+
+          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+            {fastest.eta}
+          </p>
+        </div>
+
+        <div className="rounded-2xl bg-gray-100 p-5 text-center transition-all duration-300 hover:shadow-lg dark:bg-slate-700 md:col-span-2">
+          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+            💰 Cheapest
+          </p>
+
+          <p className="mt-2 text-xl font-bold text-blue-600">
             {cheapest.name}
+          </p>
+
+          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+            {cheapest.deliveryFee}
           </p>
         </div>
 

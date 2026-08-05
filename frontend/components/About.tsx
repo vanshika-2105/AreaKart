@@ -10,7 +10,7 @@ export default function About() {
           Why Areakart?
         </h2>
 
-        <p className="text-lg text-gray-600 leading-8 text-center">
+        <p className="text-lg text-gray-600 dark:text-gray-400 leading-8 text-center">
           Areakart helps you instantly discover which grocery delivery
           services are available in your area. Instead of opening multiple
           apps one by one, simply enter your PIN code and compare services
@@ -25,7 +25,7 @@ export default function About() {
             <h3 className="font-bold text-xl mb-2">
               Fast Search
             </h3>
-            <p className="text-gray-500">
+            <p className="text-gray-500 dark:text-gray-400">
               Find available delivery apps in seconds.
             </p>
           </div>
@@ -35,7 +35,7 @@ export default function About() {
             <h3 className="font-bold text-xl mb-2">
               Location Based
             </h3>
-            <p className="text-gray-500">
+            <p className="text-gray-500 dark:text-gray-400">
               Search using your PIN code or current location.
             </p>
           </div>
@@ -45,7 +45,7 @@ export default function About() {
             <h3 className="font-bold text-xl mb-2">
               One Platform
             </h3>
-            <p className="text-gray-500">
+            <p className="text-gray-500 dark:text-gray-400">
               Compare all major instant delivery apps in one place.
             </p>
           </div>

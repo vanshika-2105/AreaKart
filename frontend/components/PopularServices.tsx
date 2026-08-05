@@ -35,34 +35,36 @@ const services = [
 
 export default function PopularServices() {
   return (
-    <section className="max-w-6xl mx-auto py-14 px-6">
-      <h2 className="text-3xl font-bold text-center mb-10">
+    <section className="mx-auto max-w-6xl bg-white dark:bg-slate-800 px-6 py-14 transition-colors duration-300 dark:bg-slate-900">
+
+      <h2 className="mb-10 text-center text-3xl font-bold text-gray-900 dark:text-white dark:text-white">
         Popular Delivery Apps
       </h2>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+      <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-6">
         {services.map((service) => (
           <a
             key={service.name}
             href={service.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-5 flex flex-col items-center"
+            className="flex flex-col items-center rounded-2xl border border-gray-200 bg-white dark:bg-slate-800 p-5 shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-slate-700 dark:bg-slate-800"
           >
             <Image
               src={service.logo}
               alt={service.name}
               width={70}
               height={70}
-              className="object-contain h-16"
+              className="h-16 object-contain"
             />
 
-            <p className="mt-4 font-semibold text-center">
+            <p className="mt-4 text-center font-semibold text-gray-900 dark:text-white dark:text-white">
               {service.name}
             </p>
           </a>
         ))}
       </div>
+
     </section>
   );
 }

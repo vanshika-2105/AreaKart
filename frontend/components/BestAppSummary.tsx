@@ -37,29 +37,64 @@ export default function BestAppSummary({ services }: Props) {
   })[0];
 
   return (
-    <div className="w-full max-w-3xl rounded-2xl border border-yellow-300 bg-yellow-50 p-6 shadow-md">
-      <h2 className="mb-6 text-center text-2xl font-bold">
+    <div className="w-full max-w-4xl rounded-3xl border border-yellow-300 bg-yellow-50 p-6 shadow-lg transition-all duration-300 dark:border-yellow-700 dark:bg-slate-800">
+      <h2 className="mb-8 text-center text-3xl font-bold text-gray-900 dark:text-white dark:text-white">
         🏆 Best App Summary
       </h2>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-        <div className="rounded-xl bg-white p-4 text-center shadow">
-          <p className="text-xl">⚡</p>
-          <h3 className="font-semibold">Fastest</h3>
-          <p>{fastest.name}</p>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+
+        {/* Fastest */}
+        <div className="rounded-2xl bg-white dark:bg-slate-800 p-6 text-center shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-700">
+          <p className="text-4xl">⚡</p>
+
+          <h3 className="mt-3 text-lg font-bold text-gray-900 dark:text-white dark:text-white">
+            Fastest
+          </h3>
+
+          <p className="mt-2 text-green-600 font-semibold">
+            {fastest.name}
+          </p>
+
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+            ETA: {fastest.eta}
+          </p>
         </div>
 
-        <div className="rounded-xl bg-white p-4 text-center shadow">
-          <p className="text-xl">⭐</p>
-          <h3 className="font-semibold">Highest Rated</h3>
-          <p>{highestRated.name}</p>
+        {/* Highest Rated */}
+        <div className="rounded-2xl bg-white dark:bg-slate-800 p-6 text-center shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-700">
+          <p className="text-4xl">⭐</p>
+
+          <h3 className="mt-3 text-lg font-bold text-gray-900 dark:text-white dark:text-white">
+            Highest Rated
+          </h3>
+
+          <p className="mt-2 text-yellow-600 font-semibold">
+            {highestRated.name}
+          </p>
+
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+            Rating: {highestRated.rating}
+          </p>
         </div>
 
-        <div className="rounded-xl bg-white p-4 text-center shadow">
-          <p className="text-xl">💰</p>
-          <h3 className="font-semibold">Cheapest</h3>
-          <p>{cheapest.name}</p>
+        {/* Cheapest */}
+        <div className="rounded-2xl bg-white dark:bg-slate-800 p-6 text-center shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-700">
+          <p className="text-4xl">💰</p>
+
+          <h3 className="mt-3 text-lg font-bold text-gray-900 dark:text-white dark:text-white">
+            Cheapest
+          </h3>
+
+          <p className="mt-2 text-blue-600 font-semibold">
+            {cheapest.name}
+          </p>
+
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+            Fee: {cheapest.deliveryFee}
+          </p>
         </div>
+
       </div>
     </div>
   );

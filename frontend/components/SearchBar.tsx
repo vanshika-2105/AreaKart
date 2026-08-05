@@ -145,208 +145,218 @@ if (filters.eta15) {
   );
 }
 
-  return (
-    <div 
+ return (
+  <div
     id="search"
-    className="mt-10 flex flex-col items-center gap-4">
-     <input
-  type="text"
-  placeholder="Enter your PIN Code"
-  value={pincode}
-  maxLength={6}
-  inputMode="numeric"
-  onChange={(e) => {
-    const value = e.target.value.replace(/\D/g, "").slice(0, 6);
-    setPincode(value);
-  }}
-  className="w-full max-w-lg rounded-xl border border-gray-300 px-5 py-4 text-lg outline-none focus:ring-2 focus:ring-green-500"
-/>
-      {error && (
-  <p className="text-red-600 font-medium">
-    {error}
-  </p>
-)}
-
-      <button
-        onClick={() => handleSearch()}
-        disabled={loading}
-        className={`rounded-lg px-4 py-2 transition ${
-  sortBy === "default"
-    ? "bg-green-600 text-white"
-    : "bg-gray-200 hover:bg-gray-300"
-}`}
-      >
-        {loading ? "Searching..." : "Search"}
-      </button>
-
-      <SearchHistory
-        history={history}
-        onSelect={(pin) => handleSearch(pin)}
-        onClear={clearHistory}
-      />
-
-      {hasSearched && location.city && (
-  <div className="w-full max-w-lg rounded-xl bg-green-50 border border-green-200 p-4 text-center">
-    <p className="text-lg font-semibold">
-      📍 {location.city}, {location.state}
-    </p>
-    <p className="text-gray-600">
-      PIN: {location.pincode}
-    </p>
-  </div>
-)}
-{hasSearched && services.length > 0 && (
-  <div className="mt-4 flex flex-wrap justify-center gap-3">
-    <button
-      onClick={() =>
-        setFilters({
-          ...filters,
-          freeDelivery: !filters.freeDelivery,
-        })
-      }
-      className={`rounded-lg px-4 py-2 transition ${
-        filters.freeDelivery
-          ? "bg-green-600 text-white"
-          : "bg-gray-200 hover:bg-gray-300"
-      }`}
-    >
-      🚚 Free Delivery
-    </button>
-
-    <button
-      onClick={() =>
-        setFilters({
-          ...filters,
-          bestChoice: !filters.bestChoice,
-        })
-      }
-      className={`rounded-lg px-4 py-2 transition ${
-        filters.bestChoice
-          ? "bg-yellow-500 text-white"
-          : "bg-gray-200 hover:bg-gray-300"
-      }`}
-    >
-      ⭐ Best Choice
-    </button>
-    {hasSearched && (
-  <button
-    onClick={() => {
-      setFilters({
-        freeDelivery: false,
-        bestChoice: false,
-        rating45: false,
-        eta15: false,
-      });
-
-      setSortBy("default");
-    }}
-    className="mt-4 rounded-lg bg-red-500 px-5 py-2 text-white transition hover:bg-red-600"
+    className="mt-10 flex flex-col items-center gap-6 transition-colors duration-300"
   >
-    🔄 Clear Filters & Sorting
-  </button>
-)}
+    {/* Search Input */}
+    <input
+      type="text"
+      placeholder="Enter your PIN Code"
+      value={pincode}
+      maxLength={6}
+      inputMode="numeric"
+      onChange={(e) => {
+        const value = e.target.value.replace(/\D/g, "").slice(0, 6);
+        setPincode(value);
+      }}
+      className="w-full max-w-lg rounded-xl border border-gray-300 bg-white dark:bg-slate-800 px-5 py-4 text-lg text-gray-900 dark:text-white outline-none transition-all duration-300 focus:ring-2 focus:ring-green-500 dark:border-slate-600 dark:bg-slate-800 dark:text-white"
+    />
 
+    {error && (
+      <p className="font-medium text-red-500">
+        {error}
+      </p>
+    )}
+
+    {/* Search Button */}
     <button
-      onClick={() =>
-        setFilters({
-          ...filters,
-          rating45: !filters.rating45,
-        })
-      }
-      className={`rounded-lg px-4 py-2 transition ${
-        filters.rating45
-          ? "bg-blue-600 text-white"
-          : "bg-gray-200 hover:bg-gray-300"
-      }`}
+      onClick={() => handleSearch()}
+      disabled={loading}
+      className="rounded-lg bg-green-600 px-6 py-3 text-white transition-all duration-300 hover:bg-green-700"
     >
-      ⭐ Rating 4.5+
+      {loading ? "Searching..." : "Search"}
     </button>
 
-    <button
-      onClick={() =>
-        setFilters({
-          ...filters,
-          eta15: !filters.eta15,
-        })
-      }
-      className={`rounded-lg px-4 py-2 transition ${
-        filters.eta15
-          ? "bg-purple-600 text-white"
-          : "bg-gray-200 hover:bg-gray-300"
-      }`}
-    >
-      ⚡ ETA &lt; 15 mins
-    </button>
+    <SearchHistory
+      history={history}
+      onSelect={(pin) => handleSearch(pin)}
+      onClear={clearHistory}
+    />
+
+    {/* Location */}
+    {hasSearched && location.city && (
+      <div className="w-full max-w-lg rounded-xl border border-green-200 bg-green-50 p-4 text-center transition-colors duration-300 dark:border-green-700 dark:bg-slate-800">
+        <p className="text-lg font-semibold dark:text-white">
+          📍 {location.city}, {location.state}
+        </p>
+
+        <p className="text-gray-600 dark:text-gray-400 dark:text-gray-300">
+          PIN: {location.pincode}
+        </p>
+      </div>
+    )}
+
+    {/* Filters */}
+    {hasSearched && services.length > 0 && (
+      <div className="mt-4 flex flex-wrap justify-center gap-3">
+
+        <button
+          onClick={() =>
+            setFilters({
+              ...filters,
+              freeDelivery: !filters.freeDelivery,
+            })
+          }
+          className={`rounded-lg px-4 py-2 transition ${
+            filters.freeDelivery
+              ? "bg-green-600 text-white"
+              : "bg-gray-200 hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
+          }`}
+        >
+          🚚 Free Delivery
+        </button>
+
+        <button
+          onClick={() =>
+            setFilters({
+              ...filters,
+              bestChoice: !filters.bestChoice,
+            })
+          }
+          className={`rounded-lg px-4 py-2 transition ${
+            filters.bestChoice
+              ? "bg-yellow-500 text-white"
+              : "bg-gray-200 hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
+          }`}
+        >
+          ⭐ Best Choice
+        </button>
+
+        <button
+          onClick={() =>
+            setFilters({
+              ...filters,
+              rating45: !filters.rating45,
+            })
+          }
+          className={`rounded-lg px-4 py-2 transition ${
+            filters.rating45
+              ? "bg-blue-600 text-white"
+              : "bg-gray-200 hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
+          }`}
+        >
+          ⭐ Rating 4.5+
+        </button>
+
+        <button
+          onClick={() =>
+            setFilters({
+              ...filters,
+              eta15: !filters.eta15,
+            })
+          }
+          className={`rounded-lg px-4 py-2 transition ${
+            filters.eta15
+              ? "bg-purple-600 text-white"
+              : "bg-gray-200 hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
+          }`}
+        >
+          ⚡ ETA &lt; 15 mins
+        </button>
+
+        <button
+          onClick={() => {
+            setFilters({
+              freeDelivery: false,
+              bestChoice: false,
+              rating45: false,
+              eta15: false,
+            });
+
+            setSortBy("default");
+          }}
+          className="rounded-lg bg-red-500 px-5 py-2 text-white transition hover:bg-red-600"
+        >
+          🔄 Clear Filters & Sorting
+        </button>
+      </div>
+    )}
+
+    {/* Coverage */}
+    {hasSearched && (
+      <div className="w-full max-w-lg rounded-xl border border-blue-200 bg-blue-50 p-4 transition-colors duration-300 dark:border-blue-700 dark:bg-slate-800">
+        <h3 className="text-center text-lg font-semibold dark:text-white">
+          Coverage Score
+        </h3>
+
+        <div className="mt-3 h-4 w-full rounded-full bg-gray-300 dark:bg-slate-700">
+          <div
+            className="h-4 rounded-full bg-green-600 transition-all duration-500"
+            style={{ width: `${coverageScore}%` }}
+          />
+        </div>
+
+        <p className="mt-2 text-center text-lg font-bold dark:text-white">
+          {coverageScore}%
+        </p>
+      </div>
+    )}
+
+    {/* Sorting */}
+    {hasSearched && services.length > 0 && (
+      <div className="mt-6 flex flex-wrap justify-center gap-3">
+
+        <button
+          onClick={() => setSortBy("default")}
+          className="rounded-lg bg-gray-200 px-4 py-2 transition hover:bg-gray-300 dark:bg-slate-700 dark:text-white dark:hover:bg-slate-600"
+        >
+          Default
+        </button>
+
+        <button
+          onClick={() => setSortBy("rating")}
+          className={`rounded-lg px-4 py-2 transition ${
+            sortBy === "rating"
+              ? "bg-yellow-500 text-white"
+              : "bg-yellow-300 hover:bg-yellow-400"
+          }`}
+        >
+          ⭐ Highest Rated
+        </button>
+
+        <button
+          onClick={() => setSortBy("eta")}
+          className={`rounded-lg px-4 py-2 transition ${
+            sortBy === "eta"
+              ? "bg-blue-700 text-white"
+              : "bg-blue-500 text-white hover:bg-blue-600"
+          }`}
+        >
+          ⚡ Fastest
+        </button>
+
+        <button
+          onClick={() => setSortBy("fee")}
+          className={`rounded-lg px-4 py-2 transition ${
+            sortBy === "fee"
+              ? "bg-green-800 text-white"
+              : "bg-green-600 text-white hover:bg-green-700"
+          }`}
+        >
+          💰 Cheapest
+        </button>
+      </div>
+    )}
+
+    <Results
+      services={filteredServices}
+      hasSearched={hasSearched}
+      favorites={favorites}
+      isFavorite={isFavorite}
+      toggleFavorite={toggleFavorite}
+    />
   </div>
-)}
-{hasSearched && (
-  <div className="w-full max-w-lg rounded-xl border border-blue-200 bg-blue-50 p-4">
-    <h3 className="text-lg font-semibold text-center">
-      Coverage Score
-    </h3>
-
-    <div className="mt-3 h-4 w-full rounded-full bg-gray-200">
-      <div
-        className="h-4 rounded-full bg-green-600 transition-all duration-500"
-        style={{ width: `${coverageScore}%` }}
-      />
-    </div>
-
-    <p className="mt-2 text-center text-lg font-bold">
-      {coverageScore}%
-    </p>
-  </div>
-)}
-{hasSearched && services.length > 0 && (
-  <div className="mt-6 flex flex-wrap justify-center gap-3">
-    <button
-      onClick={() => setSortBy("default")}
-      className="rounded-lg bg-gray-200 px-4 py-2 hover:bg-gray-300"
-    >
-      Default
-    </button>
-
-    <button
-      onClick={() => setSortBy("rating")}
-      className={`rounded-lg px-4 py-2 transition ${
-  sortBy === "rating"
-    ? "bg-yellow-500 text-white"
-    : "bg-yellow-300 hover:bg-yellow-400"
-}`}
-    >
-      ⭐ Highest Rated
-    </button>
-
-    <button
-      onClick={() => setSortBy("eta")}
-      className={`rounded-lg px-4 py-2 transition ${
-  sortBy === "eta"
-    ? "bg-blue-700 text-white"
-    : "bg-blue-500 text-white hover:bg-blue-600"
-}`}
-    >
-      ⚡ Fastest
-    </button>
-
-    <button
-      onClick={() => setSortBy("fee")}
-      className={`rounded-lg px-4 py-2 transition ${
-  sortBy === "fee"
-    ? "bg-green-800 text-white"
-    : "bg-green-600 text-white hover:bg-green-700"
-}`}
-    >
-      💰 Cheapest
-    </button>
-  </div>
-)}
-
-     <Results
-  services={filteredServices}
-  hasSearched={hasSearched}
-  favorites={favorites}
-  isFavorite={isFavorite}
-  toggleFavorite={toggleFavorite}
-/>  </div>
-  );
+);
 }
