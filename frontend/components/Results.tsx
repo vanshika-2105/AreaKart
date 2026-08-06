@@ -25,9 +25,21 @@ export default function Results({
 
   if (services.length === 0) {
     return (
-      <p className="mt-8 text-center text-gray-500 dark:text-gray-400">
-        No delivery services found for this PIN code.
-      </p>
+      <div className="mt-12 rounded-3xl border border-dashed border-gray-300 bg-gray-50 p-10 text-center dark:border-slate-700 dark:bg-slate-800">
+
+  <div className="text-6xl">
+    📦
+  </div>
+
+  <h2 className="mt-4 text-2xl font-bold dark:text-white">
+    No Delivery Apps Found
+  </h2>
+
+  <p className="mt-3 text-gray-500 dark:text-gray-300">
+    We couldn't find any delivery services for this PIN code.
+  </p>
+
+</div>
     );
   }
 

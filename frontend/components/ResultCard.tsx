@@ -17,7 +17,7 @@ export default function ResultCard({
   if (!info) return null;
 
   return (
-    <div className="rounded-3xl border border-gray-200 bg-white dark:bg-slate-800 p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl dark:border-slate-700 dark:bg-slate-800">
+    <div className="rounded-3xl bg-white dark:bg-slate-800 dark:border dark:border-slate-700 p-6 shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl">
 
       {/* Header */}
       <div className="flex items-start justify-between">

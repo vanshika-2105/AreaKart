@@ -9,6 +9,7 @@ import { deliveryInfo } from "@/lib/deliveryServices";
 import useFavorites from "@/hooks/useFavorites";
 import dynamic from "next/dynamic";
 import { locationCoordinates } from "@/lib/locationCoordinates";
+import SkeletonCard from "./SkeletonCard";
 
 const MapView = dynamic(
   () => import("@/components/Map/MapView"),
@@ -76,6 +77,7 @@ setLocation({
   state: data.state,
   pincode: data.pincode,
 });
+
 
 setServices(data.services ?? []);
 setHasSearched(true);
@@ -173,7 +175,7 @@ if (filters.eta15) {
         const value = e.target.value.replace(/\D/g, "").slice(0, 6);
         setPincode(value);
       }}
-      className="w-full max-w-lg rounded-xl border border-gray-300 bg-white dark:bg-slate-800 px-5 py-4 text-lg text-gray-900 dark:text-white outline-none transition-all duration-300 focus:ring-2 focus:ring-green-500 dark:border-slate-600 dark:bg-slate-800 dark:text-white"
+      className="w-full max-w-lg rounded-xl border border-gray-300 bg-white dark:bg-slate-800 dark:border-slate-700 dark:text-white px-5 py-4 text-lg outline-none transition focus:ring-2 focus:ring-green-500"
     />
 
     {error && (
@@ -209,6 +211,7 @@ if (filters.eta15) {
         </p>
       </div>
     )}
+    
 
     {/* Filters */}
     {hasSearched && services.length > 0 && (
@@ -368,6 +371,13 @@ if (filters.eta15) {
     city={location.city}
     pincode={location.pincode}
   />
+)}
+{loading && (
+  <div className="flex w-full flex-col items-center gap-6 mt-8">
+    <SkeletonCard />
+    <SkeletonCard />
+    <SkeletonCard />
+  </div>
 )}
 
 
