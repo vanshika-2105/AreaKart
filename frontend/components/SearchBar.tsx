@@ -7,6 +7,15 @@ import SearchHistory from "./SearchHistory";
 import useSearchHistory from "../hooks/useSearchHistory";
 import { deliveryInfo } from "@/lib/deliveryServices";
 import useFavorites from "@/hooks/useFavorites";
+import dynamic from "next/dynamic";
+import { locationCoordinates } from "@/lib/locationCoordinates";
+
+const MapView = dynamic(
+  () => import("@/components/Map/MapView"),
+  {
+    ssr: false,
+  }
+);
 
 export default function SearchBar() {
   const [pincode, setPincode] = useState("");
@@ -25,6 +34,9 @@ export default function SearchBar() {
   state: "",
   pincode: "",
 });
+const coordinates =
+  locationCoordinates[location.pincode];
+
   const TOTAL_APPS = 6;
   const [loading, setLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
@@ -349,6 +361,15 @@ if (filters.eta15) {
         </button>
       </div>
     )}
+    {hasSearched && coordinates && (
+  <MapView
+    latitude={coordinates.latitude}
+    longitude={coordinates.longitude}
+    city={location.city}
+    pincode={location.pincode}
+  />
+)}
+
 
     <Results
       services={filteredServices}
