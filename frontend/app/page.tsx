@@ -8,9 +8,19 @@ import About from "@/components/About";
 import Footer from "@/components/Footer";
 import ThemeToggle from "@/components/ThemeToggle";
 
-export default function Home() {
+interface Props {
+  searchParams: Promise<{
+    pincode?: string;
+  }>;
+}
+
+export default async function Home({
+  searchParams,
+}: Props) {
+  const params = await searchParams;
+
   return (
-    <main className="min-h-screen bg-white dark:bg-slate-800 text-gray-900 dark:text-white transition-colors duration-300 dark:bg-slate-900 dark:text-white">
+    <main>
       <ThemeToggle />
 
       <Navbar />
@@ -21,7 +31,9 @@ export default function Home() {
 
       <PopularServices />
 
-      <SearchBar />
+      <SearchBar
+        initialPincode={params.pincode ?? ""}
+      />
 
       <div className="flex justify-center">
         <LocationButton />

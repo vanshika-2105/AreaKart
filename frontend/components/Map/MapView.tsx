@@ -1,6 +1,7 @@
 "use client";
 
 import "leaflet/dist/leaflet.css";
+import toast from "react-hot-toast";
 
 import { useState } from "react";
 import {
@@ -46,7 +47,7 @@ export default function MapView({
 
   function getCurrentLocation() {
     if (!navigator.geolocation) {
-      alert("Geolocation is not supported.");
+      toast.error("Geolocation is not supported.");
       return;
     }
 
@@ -58,7 +59,7 @@ export default function MapView({
         });
       },
       () => {
-        alert("Unable to access your location.");
+        toast.error("Unable to access your location.");
       }
     );
   }

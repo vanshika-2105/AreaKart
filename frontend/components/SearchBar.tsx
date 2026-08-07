@@ -13,6 +13,9 @@ import SkeletonCard from "./SkeletonCard";
 import useSavedLocations from "@/hooks/useSavedLocation";
 import SavedLocations from "./SavedLocations";
 import ShareSearch from "./ShareSearch";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
+import EmptyState from "./EmptyState";
 
 
 const MapView = dynamic(
@@ -23,8 +26,14 @@ const MapView = dynamic(
 );
 
 
-export default function SearchBar() {
-  const [pincode, setPincode] = useState("");
+interface Props {
+  initialPincode?: string;
+}
+
+export default function SearchBar({
+  initialPincode = "",
+}: Props)  {
+  const [pincode, setPincode] = useState(initialPincode);
   const [services, setServices] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState<
   "default" | "rating" | "eta" | "fee"
@@ -55,6 +64,14 @@ const coordinates =
   saveLocation,
   deleteLocation,
 } = useSavedLocations();
+useEffect(() => {
+  if (
+    initialPincode &&
+    initialPincode.length === 6
+  ) {
+    handleSearch(initialPincode);
+  }
+}, []);
   async function handleSearch(pin?: string) {
     const searchPin = pin ?? pincode;
 
@@ -104,9 +121,9 @@ if (label && label.trim()) {
   console.error(error);
 
   if (error instanceof Error) {
-    alert(error.message);
+   toast.error(error.message);
   } else {
-    alert("Unknown error");
+    toast.error("Unknown error");
   }
 
   setServices([]);
@@ -409,13 +426,17 @@ if (filters.eta15) {
 )}
 
 
-    <Results
-      services={filteredServices}
-      hasSearched={hasSearched}
-      favorites={favorites}
-      isFavorite={isFavorite}
-      toggleFavorite={toggleFavorite}
-    />
+    {filteredServices.length === 0 && hasSearched ? (
+  <EmptyState pincode={location.pincode} />
+) : (
+  <Results
+    services={filteredServices}
+    hasSearched={hasSearched}
+    favorites={favorites}
+    isFavorite={isFavorite}
+    toggleFavorite={toggleFavorite}
+  />
+)}
   </div>
 );
 }

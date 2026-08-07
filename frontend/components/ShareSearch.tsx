@@ -1,4 +1,5 @@
 "use client";
+import toast from "react-hot-toast";
 
 interface Props {
   pincode: string;
@@ -24,13 +25,13 @@ export default function ShareSearch({
       }
     } else {
       await navigator.clipboard.writeText(url);
-      alert("Link copied to clipboard!");
+      toast.success(" 📋 Link copied to clipboard!");
     }
   }
 
   async function copyLink() {
     await navigator.clipboard.writeText(url);
-    alert("Link copied!");
+    toast.success("Link copied!");
   }
 
   return (
