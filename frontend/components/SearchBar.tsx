@@ -10,6 +10,10 @@ import useFavorites from "@/hooks/useFavorites";
 import dynamic from "next/dynamic";
 import { locationCoordinates } from "@/lib/locationCoordinates";
 import SkeletonCard from "./SkeletonCard";
+import useSavedLocations from "@/hooks/useSavedLocation";
+import SavedLocations from "./SavedLocations";
+import ShareSearch from "./ShareSearch";
+
 
 const MapView = dynamic(
   () => import("@/components/Map/MapView"),
@@ -17,6 +21,7 @@ const MapView = dynamic(
     ssr: false,
   }
 );
+
 
 export default function SearchBar() {
   const [pincode, setPincode] = useState("");
@@ -45,6 +50,11 @@ const coordinates =
 
   const { history, addSearch, clearHistory } = useSearchHistory();
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
+  const {
+  locations,
+  saveLocation,
+  deleteLocation,
+} = useSavedLocations();
   async function handleSearch(pin?: string) {
     const searchPin = pin ?? pincode;
 
@@ -81,6 +91,13 @@ setLocation({
 
 setServices(data.services ?? []);
 setHasSearched(true);
+      const label = prompt(
+  "Enter a name for this location (e.g. Home, Office):"
+);
+
+if (label && label.trim()) {
+  saveLocation(label.trim(), searchPin);
+}
       // Save successful search
       addSearch(searchPin);
     } catch (error: any) {
@@ -198,6 +215,11 @@ if (filters.eta15) {
       onSelect={(pin) => handleSearch(pin)}
       onClear={clearHistory}
     />
+    <SavedLocations
+  locations={locations}
+  onSelect={(pin) => handleSearch(pin)}
+  onDelete={deleteLocation}
+/>
 
     {/* Location */}
     {hasSearched && location.city && (
@@ -370,6 +392,12 @@ if (filters.eta15) {
     longitude={coordinates.longitude}
     city={location.city}
     pincode={location.pincode}
+  />
+)}
+{hasSearched && (
+  <ShareSearch
+    pincode={location.pincode}
+    city={location.city}
   />
 )}
 {loading && (
