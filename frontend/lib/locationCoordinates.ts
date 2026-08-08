@@ -24,4 +24,10 @@ export const locationCoordinates: Record<
     latitude: 12.9716,
     longitude: 77.5946,
   },
+
+  // Kolkata
+  "700001": {
+    latitude: 22.5726,
+    longitude: 88.3639,
+  },
 };

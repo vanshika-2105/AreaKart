@@ -8,7 +8,6 @@ import useSearchHistory from "../hooks/useSearchHistory";
 import { deliveryInfo } from "@/lib/deliveryServices";
 import useFavorites from "@/hooks/useFavorites";
 import dynamic from "next/dynamic";
-import { locationCoordinates } from "@/lib/locationCoordinates";
 import SkeletonCard from "./SkeletonCard";
 import useSavedLocations from "@/hooks/useSavedLocation";
 import SavedLocations from "./SavedLocations";
@@ -16,6 +15,7 @@ import ShareSearch from "./ShareSearch";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import EmptyState from "./EmptyState";
+import { locationCoordinates } from "@/lib/locationCoordinates";
 
 
 const MapView = dynamic(
@@ -48,9 +48,9 @@ export default function SearchBar({
   city: "",
   state: "",
   pincode: "",
+  latitude: null as number | null,
+  longitude: null as number | null,
 });
-const coordinates =
-  locationCoordinates[location.pincode];
 
   const TOTAL_APPS = 6;
   const [loading, setLoading] = useState(false);
@@ -103,6 +103,8 @@ setLocation({
   city: data.city,
   state: data.state,
   pincode: data.pincode,
+  latitude: data.latitude,
+  longitude: data.longitude,
 });
 
 
@@ -403,14 +405,16 @@ if (filters.eta15) {
         </button>
       </div>
     )}
-    {hasSearched && coordinates && (
-  <MapView
-    latitude={coordinates.latitude}
-    longitude={coordinates.longitude}
-    city={location.city}
-    pincode={location.pincode}
-  />
-)}
+    {hasSearched &&
+  typeof location.latitude === "number" &&
+  typeof location.longitude === "number" && (
+    <MapView
+      latitude={location.latitude}
+      longitude={location.longitude}
+      city={location.city}
+      pincode={location.pincode}
+    />
+  )}
 {hasSearched && (
   <ShareSearch
     pincode={location.pincode}
