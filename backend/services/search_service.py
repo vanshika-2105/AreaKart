@@ -1,9 +1,10 @@
 from services.pincode_service import PincodeService
+from data.availability_data import availability_data
 
 
 def get_delivery_services(city: str):
     """
-    Return delivery apps based on the city.
+    Fallback delivery apps based on city.
     """
 
     city = city.strip().lower()
@@ -55,12 +56,18 @@ def get_delivery_services(city: str):
 
 
 def search_pincode(pincode: str):
+
     location = PincodeService.get_location(pincode)
 
     if location is None:
         return None
 
-    services = get_delivery_services(location["city"])
+    # First try exact PIN-code availability
+    services = availability_data.get(pincode)
+
+    # If PIN is not configured yet, use city fallback
+    if services is None:
+        services = get_delivery_services(location["city"])
 
     return {
         "city": location["city"],

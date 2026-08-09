@@ -19,6 +19,7 @@ def search(request: SearchRequest):
             "latitude": None,
             "longitude": None,
             "services": [],
+            "availability": [],
             "message": "No delivery services found for this PIN code."
         }
 
@@ -28,5 +29,9 @@ def search(request: SearchRequest):
         "state": result["state"],
         "latitude": result["latitude"],
         "longitude": result["longitude"],
-        "services": result["services"]
+        "services": [
+            service["name"]
+            for service in result["services"]
+        ],
+        "availability": result["services"],
     }

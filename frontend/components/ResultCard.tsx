@@ -7,12 +7,20 @@ interface Props {
   name: string;
   isFavorite: boolean;
   toggleFavorite: (app: string) => void;
+  availability?: Availability;
+}
+interface Availability {
+  name: string;
+  type: string;
+  verification_method: string;
+  status: string;
 }
 
 export default function ResultCard({
   name,
   isFavorite,
   toggleFavorite,
+   availability,
 }: Props) {
   const info = deliveryInfo[name];
 
@@ -127,9 +135,19 @@ export default function ResultCard({
 
       {/* Footer */}
       <div className="mt-6 flex flex-col gap-3">
-        <span className="rounded-full bg-green-100 px-4 py-2 text-center font-semibold text-green-700">
-          ✅ Available
-        </span>
+        {availability?.status === "estimated" ? (
+  <span className="rounded-full bg-yellow-100 px-5 py-2 font-semibold text-yellow-700">
+    ⚠️ Availability Estimated
+  </span>
+) : availability?.status === "verified" ? (
+  <span className="rounded-full bg-green-100 px-5 py-2 font-semibold text-green-700">
+    ✅ Verified Available
+  </span>
+) : (
+  <span className="rounded-full bg-gray-100 px-5 py-2 font-semibold text-gray-700">
+    ℹ️ Availability Unknown
+  </span>
+)}
 
         <a
           href={info.url}

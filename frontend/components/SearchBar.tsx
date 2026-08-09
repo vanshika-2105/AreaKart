@@ -35,6 +35,14 @@ export default function SearchBar({
 }: Props)  {
   const [pincode, setPincode] = useState(initialPincode);
   const [services, setServices] = useState<string[]>([]);
+  const [availability, setAvailability] = useState<
+  {
+    name: string;
+    type: string;
+    verification_method: string;
+    status: string;
+  }[]
+>([]);
   const [sortBy, setSortBy] = useState<
   "default" | "rating" | "eta" | "fee"
 >("default");
@@ -109,6 +117,7 @@ setLocation({
 
 
 setServices(data.services ?? []);
+setAvailability(data.availability ?? []);
 setHasSearched(true);
       const label = prompt(
   "Enter a name for this location (e.g. Home, Office):"
@@ -129,6 +138,7 @@ if (label && label.trim()) {
   }
 
   setServices([]);
+  setAvailability([]);
 }
   finally {
       setLoading(false);
@@ -433,13 +443,14 @@ if (filters.eta15) {
     {filteredServices.length === 0 && hasSearched ? (
   <EmptyState pincode={location.pincode} />
 ) : (
-  <Results
-    services={filteredServices}
-    hasSearched={hasSearched}
-    favorites={favorites}
-    isFavorite={isFavorite}
-    toggleFavorite={toggleFavorite}
-  />
+ <Results
+  services={filteredServices}
+  availability={availability}
+  hasSearched={hasSearched}
+  favorites={favorites}
+  isFavorite={isFavorite}
+  toggleFavorite={toggleFavorite}
+/>
 )}
   </div>
 );

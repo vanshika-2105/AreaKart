@@ -4,8 +4,16 @@ import ComparisonTable from "./ComparisonTable";
 import DeliveryInsights from "./DeliveryInsights";
 import FavoritesSection from "./FavoritesSection";
 
+interface Availability {
+  name: string;
+  type: string;
+  verification_method: string;
+  status: string;
+}
+
 interface Props {
   services: string[];
+  availability: Availability[];
   hasSearched: boolean;
   favorites: string[];
   isFavorite: (app: string) => boolean;
@@ -14,6 +22,7 @@ interface Props {
 
 export default function Results({
   services,
+  availability,
   hasSearched,
   favorites,
   isFavorite,
@@ -67,11 +76,14 @@ export default function Results({
       <div className="mx-auto grid w-full max-w-6xl justify-center gap-6 md:grid-cols-2">
         {otherServices.map((service) => (
           <ResultCard
-            key={service}
-            name={service}
-            isFavorite={isFavorite(service)}
-            toggleFavorite={toggleFavorite}
-          />
+  key={service}
+  name={service}
+  isFavorite={isFavorite(service)}
+  toggleFavorite={toggleFavorite}
+  availability={availability.find(
+    (item) => item.name === service
+  )}
+/>
         ))}
       </div>
 
