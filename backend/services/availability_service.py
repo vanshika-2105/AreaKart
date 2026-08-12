@@ -1,33 +1,62 @@
 from services.search_service import search_pincode
 from services.service_registry import SERVICE_REGISTRY
+from services.verifiers.verifier_registry import VERIFIER_REGISTRY
 
 
 def get_available_services(pincode: str):
-    result = search_pincode(pincode)
+    """
+    Get delivery services and their availability
+    for a given pincode.
+    """
 
-    if result is None:
+    location = search_pincode(pincode)
+
+    if location is None:
         return None
 
-    services = []
+    services = location["services"]
 
-    for service in result["services"]:
-        registry = SERVICE_REGISTRY.get(service)
+    availability = []
 
-        if registry is None:
+    for service in services:
+
+        service_info = SERVICE_REGISTRY.get(service)
+
+        verifier = VERIFIER_REGISTRY.get(service)
+
+        if service_info is None:
             continue
 
-        services.append({
-            "name": registry["name"],
-            "type": registry["type"],
-            "verification_method": registry["verification_method"],
-            "status": "estimated",
-        })
+        if verifier is None:
+            result = {
+                "status": "estimated",
+                "confidence": "unknown",
+                "message": "No verifier configured for this service.",
+            }
+        else:
+            result = verifier.verify(
+                pincode=location["pincode"],
+                latitude=location["latitude"],
+                longitude=location["longitude"],
+            )
+
+        availability.append(
+            {
+                "name": service,
+                "type": service_info["type"],
+                "verification_method": service_info["verification_method"],
+                "status": result["status"],
+                "confidence": result["confidence"],
+                "message": result["message"],
+            }
+        )
 
     return {
-        "pincode": result["pincode"],
-        "city": result["city"],
-        "state": result["state"],
-        "latitude": result["latitude"],
-        "longitude": result["longitude"],
+        "pincode": location["pincode"],
+        "city": location["city"],
+        "state": location["state"],
+        "latitude": location["latitude"],
+        "longitude": location["longitude"],
         "services": services,
+        "availability": availability,
     }
