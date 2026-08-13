@@ -38,6 +38,7 @@ def get_available_services(pincode: str):
                 pincode=location["pincode"],
                 latitude=location["latitude"],
                 longitude=location["longitude"],
+                city=location["city"],
             )
 
         availability.append(

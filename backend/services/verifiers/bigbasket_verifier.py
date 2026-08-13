@@ -1,3 +1,4 @@
+from data.service_coverage import SERVICE_COVERAGE
 from services.verifiers.base_verifier import BaseVerifier
 
 
@@ -10,17 +11,25 @@ class BigBasketVerifier(BaseVerifier):
         longitude: float,
     ):
         """
-        Verify BigBasket availability for a pincode.
-
-        Currently returns estimated status until a reliable
-        official verification mechanism is available.
+        Check BigBasket availability using PIN-level coverage data.
         """
+
+        pincode_coverage = SERVICE_COVERAGE.get(pincode, {})
+
+        coverage = pincode_coverage.get("BigBasket")
+
+        if coverage:
+            return {
+                "status": coverage["status"],
+                "confidence": coverage["confidence"],
+                "message": "Availability based on PIN-level coverage data.",
+            }
 
         return {
             "status": "estimated",
             "confidence": "unknown",
             "message": (
-                "BigBasket availability requires direct "
-                "pincode/address verification."
+                "No PIN-specific coverage data found. "
+                "Availability is estimated."
             ),
         }
