@@ -29,9 +29,6 @@ def search(request: SearchRequest):
         "state": result["state"],
         "latitude": result["latitude"],
         "longitude": result["longitude"],
-        "services": [
-            service["name"]
-            for service in result["services"]
-        ],
-        "availability": result["services"],
+        "services": result["services"],
+        "availability": result["availability"],
     }
