@@ -3,6 +3,7 @@ from data.service_coverage import (
     CITY_SERVICE_COVERAGE,
 )
 from services.verifiers.base_verifier import BaseVerifier
+from services.verifiers.verification_result import VerificationResult
 
 
 class CoverageVerifier(BaseVerifier):
@@ -13,53 +14,35 @@ class CoverageVerifier(BaseVerifier):
     def verify(
         self,
         pincode: str,
-        latitude: float,
-        longitude: float,
-        city: str = "",
+        latitude=None,
+        longitude=None,
+        city: str = None,
     ):
-        """
-        Check service availability using:
-        1. PIN-level coverage
-        2. City-level coverage
-        3. Fallback estimate
-        """
-
-        # -----------------------------
-        # 1. Check PIN-level coverage
-        # -----------------------------
+        # 1. PIN-level coverage
         pincode_coverage = SERVICE_COVERAGE.get(pincode, {})
-        coverage = pincode_coverage.get(self.service_name)
 
-        if coverage:
-            return {
-                "status": coverage["status"],
-                "confidence": coverage["confidence"],
-                "message": "Availability based on PIN-level coverage data.",
-            }
+        if self.service_name in pincode_coverage:
+            data = pincode_coverage[self.service_name]
 
-        # -----------------------------
-        # 2. Check city-level coverage
-        # -----------------------------
-        city_key = city.strip().lower()
+            return VerificationResult.estimated(
+                "Availability based on PIN-level coverage data.",
+                data.get("confidence", "medium")
+            )
 
+        # 2. City-level coverage
+        city_key = city.strip().lower() if city else ""
         city_coverage = CITY_SERVICE_COVERAGE.get(city_key, {})
-        coverage = city_coverage.get(self.service_name)
 
-        if coverage:
-            return {
-                "status": coverage["status"],
-                "confidence": coverage["confidence"],
-                "message": "Availability based on city-level coverage data.",
-            }
+        if self.service_name in city_coverage:
+            data = city_coverage[self.service_name]
 
-        # -----------------------------
-        # 3. Fallback
-        # -----------------------------
-        return {
-            "status": "estimated",
-            "confidence": "unknown",
-            "message": (
-                "No PIN-specific or city-level coverage data found. "
-                "Availability is estimated."
-            ),
-        }
+            return VerificationResult.estimated(
+                "Availability based on city-level coverage data.",
+                data.get("confidence", "medium")
+            )
+
+        # 3. No coverage data
+        return VerificationResult.unknown(
+            "No PIN-specific or city-level coverage data found. "
+            "Availability is unknown."
+        )

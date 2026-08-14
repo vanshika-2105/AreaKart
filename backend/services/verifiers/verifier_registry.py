@@ -1,10 +1,10 @@
-from services.verifiers.coverage_verifier import CoverageVerifier
+from services.verifiers.smart_verifier import SmartVerifier
 
 
 VERIFIER_REGISTRY = {
-    "Blinkit": CoverageVerifier("Blinkit"),
-    "Zepto": CoverageVerifier("Zepto"),
-    "Instamart": CoverageVerifier("Instamart"),
-    "BigBasket": CoverageVerifier("BigBasket"),
-    "JioMart": CoverageVerifier("JioMart"),
+    "Blinkit": SmartVerifier("Blinkit"),
+    "Zepto": SmartVerifier("Zepto"),
+    "Instamart": SmartVerifier("Instamart"),
+    "BigBasket": SmartVerifier("BigBasket"),
+    "JioMart": SmartVerifier("JioMart"),
 }
