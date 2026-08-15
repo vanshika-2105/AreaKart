@@ -3,8 +3,7 @@ OFFICIAL_PINCODE_COVERAGE = {
         # Add only PIN codes that have been directly verified
         # using JioMart's official PIN/location check.
         "verified_pincodes": [
-            # Example:
-            # "110001",
+            "400002",
         ],
 
         "unavailable_pincodes": [
