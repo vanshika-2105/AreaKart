@@ -45,7 +45,7 @@ SERVICE_COVERAGE = {
         },
     },
 
-       "560001": {
+    "560001": {
         "Blinkit": {
             "status": "estimated",
             "confidence": "medium",
@@ -66,9 +66,33 @@ SERVICE_COVERAGE = {
             "status": "estimated",
             "confidence": "medium",
         },
-    }
+    },
 
+    "201310": {
+        "Blinkit": {
+            "status": "estimated",
+            "confidence": "high",
+        },
+        "Zepto": {
+            "status": "estimated",
+            "confidence": "high",
+        },
+        "Instamart": {
+            "status": "estimated",
+            "confidence": "high",
+        },
+        "BigBasket": {
+            "status": "estimated",
+            "confidence": "high",
+        },
+        "JioMart": {
+            "status": "estimated",
+            "confidence": "high",
+        },
+    },
 }
+
+
 CITY_SERVICE_COVERAGE = {
     "central delhi": {
         "Blinkit": {

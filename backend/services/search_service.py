@@ -22,6 +22,9 @@ def get_delivery_services(city: str):
         "gurugram",
         "gurgaon",
         "noida",
+        "greater noida",
+        "gautam buddha nagar",
+        "ghaziabad",
     ]
 
     tier2_cities = [

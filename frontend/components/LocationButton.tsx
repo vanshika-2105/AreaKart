@@ -1,53 +1,45 @@
 "use client";
 
+import { sendLocation } from "@/services/api";
+
 export default function LocationButton() {
-
   const getLocation = () => {
-
     if (!navigator.geolocation) {
-      alert("Geolocation is not supported.");
+      alert("Geolocation is not supported by your browser.");
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      async (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
 
-        console.log(position.coords.latitude);
-        console.log(position.coords.longitude);
+        try {
+          const result = await sendLocation(latitude, longitude);
 
-        alert(
-          `Latitude: ${position.coords.latitude}
-Longitude: ${position.coords.longitude}`
-        );
+          console.log("Location API response:", result);
 
+          alert(result.message || "Location received successfully");
+        } catch (error) {
+          console.error("Location error:", error);
+
+          if (error instanceof Error) {
+            alert(error.message);
+          } else {
+            alert("Unable to send your location.");
+          }
+        }
       },
-      () => {
-        alert("Unable to retrieve location.");
+      (error) => {
+        console.error("Geolocation error:", error);
+        alert("Unable to retrieve your location. Please allow location permission.");
       }
     );
-
   };
 
   return (
-
-    <button
-      onClick={getLocation}
-      className="
-      mt-5
-      bg-white dark:bg-slate-800
-      border
-      border-green-600
-      text-green-600
-      px-6
-      py-3
-      rounded-xl
-      hover:bg-green-50
-      transition
-      "
-    >
+    <button onClick={getLocation}>
       📍 Use My Current Location
     </button>
-
   );
-
 }

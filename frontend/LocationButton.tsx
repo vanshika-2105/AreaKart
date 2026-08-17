@@ -1,53 +1,57 @@
 "use client";
 
+const API_URL = "http://localhost:8000";
+
 export default function LocationButton() {
-
   const getLocation = () => {
-
     if (!navigator.geolocation) {
-      alert("Geolocation is not supported.");
+      alert("Geolocation is not supported by your browser.");
       return;
     }
 
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      async (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
 
-        console.log(position.coords.latitude);
-        console.log(position.coords.longitude);
+        try {
+          const response = await fetch(`${API_URL}/location`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              latitude,
+              longitude,
+            }),
+          });
 
-        alert(
-          `Latitude: ${position.coords.latitude}
-Longitude: ${position.coords.longitude}`
-        );
+          if (!response.ok) {
+            throw new Error("Failed to send location");
+          }
 
+          const data = await response.json();
+
+          console.log("Backend response:", data);
+
+          alert(
+            `Location sent successfully!\nLatitude: ${data.latitude}\nLongitude: ${data.longitude}`
+          );
+        } catch (error) {
+          console.error("Location API error:", error);
+          alert("Failed to send your location to AreaKart.");
+        }
       },
-      () => {
-        alert("Unable to retrieve location.");
+      (error) => {
+        console.error("Location error:", error);
+        alert("Unable to retrieve your location. Please allow location permission.");
       }
     );
-
   };
 
   return (
-
-    <button
-      onClick={getLocation}
-      className="
-      mt-5
-      bg-white dark:bg-slate-800
-      border
-      border-green-600
-      text-green-600
-      px-6
-      py-3
-      rounded-xl
-      hover:bg-green-50
-      transition
-      "
-    >
+    <button onClick={getLocation}>
       📍 Use My Current Location
     </button>
-
   );
-
 }
