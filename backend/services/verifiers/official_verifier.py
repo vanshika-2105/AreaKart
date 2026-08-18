@@ -47,6 +47,12 @@ class OfficialVerifier(BaseVerifier):
 
         if service_data:
             city_key = city.strip().lower() if city else ""
+
+            CITY_ALIASES = {
+             "gautam buddha nagar": "noida",
+            }
+
+            city_key = CITY_ALIASES.get(city_key, city_key)
             official_cities = service_data.get("cities", [])
 
             if city_key in official_cities:

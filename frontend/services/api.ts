@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000";
+const API_URL = "http://127.0.0.1:8000";
 
 export async function searchPincode(pincode: string) {
   try {
@@ -26,14 +26,10 @@ export async function searchPincode(pincode: string) {
 
     return data;
   } catch (error) {
-    if (error instanceof Error) {
-      throw error;
-    }
-
-    throw new Error("Unable to connect to the server.");
+    console.error("Search API error:", error);
+    throw error;
   }
 }
-
 
 export async function sendLocation(
   latitude: number,
@@ -55,16 +51,13 @@ export async function sendLocation(
 
     if (!response.ok) {
       throw new Error(
-        data.detail || data.message || "Unable to send your location."
+        data.detail || data.message || "Failed to send location."
       );
     }
 
     return data;
   } catch (error) {
-    if (error instanceof Error) {
-      throw error;
-    }
-
-    throw new Error("Unable to connect to the server.");
+    console.error("Location API error:", error);
+    throw error;
   }
 }
