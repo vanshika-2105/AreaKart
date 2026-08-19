@@ -1,13 +1,28 @@
 OFFICIAL_PINCODE_COVERAGE = {
+    "Blinkit": {
+        "verified_pincodes": [],
+        "unavailable_pincodes": [],
+    },
+
+    "Zepto": {
+        "verified_pincodes": [],
+        "unavailable_pincodes": [],
+    },
+
+    "Instamart": {
+        "verified_pincodes": [],
+        "unavailable_pincodes": [],
+    },
+
+    "BigBasket": {
+        "verified_pincodes": [],
+        "unavailable_pincodes": [],
+    },
+
     "JioMart": {
-        # Add only PIN codes that have been directly verified
-        # using JioMart's official PIN/location check.
         "verified_pincodes": [
             "400002",
         ],
-
-        "unavailable_pincodes": [
-            # Add PIN codes confirmed as unserviceable.
-        ],
-    }
+        "unavailable_pincodes": [],
+    },
 }

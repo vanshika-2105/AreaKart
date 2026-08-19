@@ -2,6 +2,8 @@ from data.service_coverage import (
     SERVICE_COVERAGE,
     CITY_SERVICE_COVERAGE,
 )
+from data.city_aliases import normalize_city
+
 from services.verifiers.base_verifier import BaseVerifier
 from services.verifiers.verification_result import VerificationResult
 
@@ -18,7 +20,9 @@ class CoverageVerifier(BaseVerifier):
         longitude=None,
         city: str = None,
     ):
+        # --------------------------------
         # 1. PIN-level coverage
+        # --------------------------------
         pincode_coverage = SERVICE_COVERAGE.get(pincode, {})
 
         if self.service_name in pincode_coverage:
@@ -29,8 +33,10 @@ class CoverageVerifier(BaseVerifier):
                 data.get("confidence", "medium")
             )
 
+        # --------------------------------
         # 2. City-level coverage
-        city_key = city.strip().lower() if city else ""
+        # --------------------------------
+        city_key = normalize_city(city)
         city_coverage = CITY_SERVICE_COVERAGE.get(city_key, {})
 
         if self.service_name in city_coverage:
@@ -41,7 +47,9 @@ class CoverageVerifier(BaseVerifier):
                 data.get("confidence", "medium")
             )
 
+        # --------------------------------
         # 3. No coverage data
+        # --------------------------------
         return VerificationResult.unknown(
             "No PIN-specific or city-level coverage data found. "
             "Availability is unknown."

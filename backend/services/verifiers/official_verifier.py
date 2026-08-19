@@ -1,5 +1,7 @@
 from data.official_city_coverage import OFFICIAL_CITY_COVERAGE
 from data.official_pincode_coverage import OFFICIAL_PINCODE_COVERAGE
+from data.city_aliases import normalize_city
+
 from services.verifiers.base_verifier import BaseVerifier
 from services.verifiers.verification_result import VerificationResult
 
@@ -46,13 +48,8 @@ class OfficialVerifier(BaseVerifier):
         service_data = OFFICIAL_CITY_COVERAGE.get(self.service_name)
 
         if service_data:
-            city_key = city.strip().lower() if city else ""
+            city_key = normalize_city(city)
 
-            CITY_ALIASES = {
-             "gautam buddha nagar": "noida",
-            }
-
-            city_key = CITY_ALIASES.get(city_key, city_key)
             official_cities = service_data.get("cities", [])
 
             if city_key in official_cities:
