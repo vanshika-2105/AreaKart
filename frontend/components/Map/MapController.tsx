@@ -15,7 +15,14 @@ export default function MapController({
   const map = useMap();
 
   useEffect(() => {
-    map.flyTo([latitude, longitude], 14, {
+    if (
+      typeof latitude !== "number" ||
+      typeof longitude !== "number"
+    ) {
+      return;
+    }
+
+    map.flyTo([latitude, longitude], 15, {
       animate: true,
       duration: 2,
     });

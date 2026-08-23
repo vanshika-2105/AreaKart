@@ -1,21 +1,22 @@
 OFFICIAL_CITY_COVERAGE = {
-    "Blinkit": {
-        "cities": [
-            "mumbai",
-            "bengaluru",
-            "bangalore",
-            "delhi",
-            "new delhi",
-            "central delhi",
-            "gurugram",
-            "gurgaon",
-            "noida",
-            "hyderabad",
-            "chennai",
-            "kolkata",
-            "pune",
-        ]
-    },
+   "Blinkit": {
+    "cities": [
+        "mumbai",
+        "bengaluru",
+        "bangalore",
+        "delhi",
+        "new delhi",
+        "central delhi",
+        "gurugram",
+        "gurgaon",
+        "noida",
+        "greater noida",
+        "hyderabad",
+        "chennai",
+        "kolkata",
+        "pune",
+    ]
+},
 
     "Zepto": {
         "cities": [

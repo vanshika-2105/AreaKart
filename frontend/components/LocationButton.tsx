@@ -2,7 +2,14 @@
 
 import { sendLocation } from "@/services/api";
 
-export default function LocationButton() {
+type LocationButtonProps = {
+  onLocationFound?: (result: any) => void;
+};
+
+export default function LocationButton({
+  onLocationFound,
+}: LocationButtonProps) {
+
   const getLocation = () => {
     if (!navigator.geolocation) {
       alert("Geolocation is not supported by your browser.");
@@ -11,28 +18,84 @@ export default function LocationButton() {
 
     navigator.geolocation.getCurrentPosition(
       async (position) => {
+
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
+        console.log("GPS coordinates:", {
+          latitude,
+          longitude,
+        });
+
         try {
-          const result = await sendLocation(latitude, longitude);
 
-          console.log("Location API response:", result);
+          const result = await sendLocation(
+            latitude,
+            longitude
+          );
 
-          alert(result.message || "Location received successfully");
+          console.log(
+            "Location API response:",
+            result
+          );
+
+          onLocationFound?.(result);
+
         } catch (error) {
-          console.error("Location error:", error);
+
+          console.error(
+            "Location error:",
+            error
+          );
 
           if (error instanceof Error) {
             alert(error.message);
           } else {
-            alert("Unable to send your location.");
+            alert(
+              "Unable to determine your current location."
+            );
           }
         }
       },
+
       (error) => {
-        console.error("Geolocation error:", error);
-        alert("Unable to retrieve your location. Please allow location permission.");
+
+        console.error(
+          "Geolocation error:",
+          error
+        );
+
+        switch (error.code) {
+
+          case error.PERMISSION_DENIED:
+            alert(
+              "Location permission was denied. Please allow location access."
+            );
+            break;
+
+          case error.POSITION_UNAVAILABLE:
+            alert(
+              "Your location is currently unavailable. Please try again."
+            );
+            break;
+
+          case error.TIMEOUT:
+            alert(
+              "Location request timed out. Please try again."
+            );
+            break;
+
+          default:
+            alert(
+              "Unable to retrieve your current location."
+            );
+        }
+      },
+
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 0,
       }
     );
   };

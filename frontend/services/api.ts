@@ -20,16 +20,22 @@ export async function searchPincode(pincode: string) {
       }
 
       throw new Error(
-        data.detail || data.message || "Something went wrong. Please try again."
+        data.detail ||
+          data.message ||
+          "Something went wrong. Please try again."
       );
     }
 
     return data;
   } catch (error) {
-    console.error("Search API error:", error);
-    throw error;
+    if (error instanceof Error) {
+      throw error;
+    }
+
+    throw new Error("Unable to connect to Areakart.");
   }
 }
+
 
 export async function sendLocation(
   latitude: number,
@@ -51,13 +57,18 @@ export async function sendLocation(
 
     if (!response.ok) {
       throw new Error(
-        data.detail || data.message || "Failed to send location."
+        data.detail ||
+          data.message ||
+          "Unable to determine your location."
       );
     }
 
     return data;
   } catch (error) {
-    console.error("Location API error:", error);
-    throw error;
+    if (error instanceof Error) {
+      throw error;
+    }
+
+    throw new Error("Unable to connect to Areakart.");
   }
 }

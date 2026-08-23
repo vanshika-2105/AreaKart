@@ -1,14 +1,35 @@
 CITY_ALIASES = {
-    "gautam buddha nagar": "noida",
-    "bangalore": "bengaluru",
+    # NCR
+    "greater noida": "greater noida",
+    "noida": "noida",
+    "gautam buddha nagar": "greater noida",
+    "gautam buddh nagar": "greater noida",
+    "dadri": "greater noida",
+
+    # Delhi
+    "new delhi": "new delhi",
+    "central delhi": "new delhi",
+    "south delhi": "new delhi",
+    "north delhi": "new delhi",
+    "east delhi": "new delhi",
+    "west delhi": "new delhi",
+
+    # Gurgaon
     "gurgaon": "gurugram",
-    "new delhi": "delhi",
+    "gurugram": "gurugram",
+
+    # Bangalore
+    "bangalore": "bengaluru",
+    "bengaluru": "bengaluru",
+
+    # Mumbai
+    "mumbai": "mumbai",
 }
 
 
-def normalize_city(city: str) -> str:
+def normalize_city(city: str | None) -> str:
     """
-    Normalize city names so aliases use one standard name.
+    Normalize a city name using the configured aliases.
     """
 
     if not city:
