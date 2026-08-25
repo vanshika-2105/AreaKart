@@ -26,8 +26,10 @@ class OfficialVerifier(BaseVerifier):
         )
 
         if pincode_service_data:
+
             if pincode in pincode_service_data.get(
-                "verified_pincodes", []
+                "verified_pincodes",
+                []
             ):
                 return VerificationResult.verified(
                     f"{self.service_name} is officially verified "
@@ -35,7 +37,8 @@ class OfficialVerifier(BaseVerifier):
                 )
 
             if pincode in pincode_service_data.get(
-                "unavailable_pincodes", []
+                "unavailable_pincodes",
+                []
             ):
                 return VerificationResult.unavailable(
                     f"{self.service_name} is officially unavailable "
@@ -43,25 +46,41 @@ class OfficialVerifier(BaseVerifier):
                 )
 
         # --------------------------------
-        # 2. Official city-level verification
+        # 2. Official city-level coverage
         # --------------------------------
-        service_data = OFFICIAL_CITY_COVERAGE.get(self.service_name)
+        service_data = OFFICIAL_CITY_COVERAGE.get(
+            self.service_name
+        )
 
         if service_data:
+
             city_key = normalize_city(city)
 
-            official_cities = service_data.get("cities", [])
+            official_cities = service_data.get(
+                "cities",
+                []
+            )
 
             if city_key in official_cities:
-                return VerificationResult.verified(
-                    f"{self.service_name} is listed in official "
-                    "city coverage data."
-                )
+
+                # City-level official coverage is NOT
+                # exact-location verification.
+                return VerificationResult.estimated(
+    f"{self.service_name} is listed in official "
+    "city coverage data.",
+    "high",
+    "city_coverage",
+)
 
         # --------------------------------
         # 3. No official verification found
         # --------------------------------
+        # --------------------------------
+# 3. No official verification found
+# -----# --------------------------------
+# 3. No official verification found
+# --------------------------------
         return VerificationResult.unknown(
-            f"{self.service_name} has not been verified "
-            "from an official source."
-        )
+    f"{self.service_name} has not been verified "
+    "from an official source."
+)

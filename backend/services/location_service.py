@@ -111,6 +111,7 @@ def get_location_from_coordinates(
                     "status": result["status"],
                     "confidence": result["confidence"],
                     "message": result["message"],
+                    "url": service_info["url"],
                 }
             )
 

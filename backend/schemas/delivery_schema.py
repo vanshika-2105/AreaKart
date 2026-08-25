@@ -8,8 +8,9 @@ class ServiceAvailability(BaseModel):
     verification_method: str
     status: str
     confidence: str
+    verification_level: str
     message: str
-
+    url: str
 
 class SearchResponse(BaseModel):
     pincode: str

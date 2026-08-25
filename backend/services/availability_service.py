@@ -42,15 +42,17 @@ def get_available_services(pincode: str):
             )
 
         availability.append(
-            {
-                "name": service,
-                "type": service_info["type"],
-                "verification_method": service_info["verification_method"],
-                "status": result["status"],
-                "confidence": result["confidence"],
-                "message": result["message"],
-            }
-        )
+    {
+        "name": service,
+        "type": service_info["type"],
+        "verification_method": service_info["verification_method"],
+        "status": result["status"],
+        "confidence": result["confidence"],
+        "verification_level": result["verification_level"],
+        "message": result["message"],
+        "url": service_info["url"],
+    }
+)
 
     return {
         "pincode": location["pincode"],

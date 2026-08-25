@@ -29,9 +29,10 @@ class CoverageVerifier(BaseVerifier):
             data = pincode_coverage[self.service_name]
 
             return VerificationResult.estimated(
-                "Availability based on PIN-level coverage data.",
-                data.get("confidence", "medium")
-            )
+            "Availability based on PIN-level coverage data.",
+             data.get("confidence", "medium"),
+             "pincode_coverage"
+)
 
         # --------------------------------
         # 2. City-level coverage
@@ -43,9 +44,11 @@ class CoverageVerifier(BaseVerifier):
             data = city_coverage[self.service_name]
 
             return VerificationResult.estimated(
-                "Availability based on city-level coverage data.",
-                data.get("confidence", "medium")
-            )
+    "Availability based on city-level coverage data.",
+    data.get("confidence", "medium"),
+    "city_coverage"
+)
+
 
         # --------------------------------
         # 3. No coverage data

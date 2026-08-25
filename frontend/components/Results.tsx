@@ -9,6 +9,9 @@ interface Availability {
   type: string;
   verification_method: string;
   status: string;
+  confidence: string;
+  message: string;
+  url?: string;
 }
 
 interface Props {
@@ -76,14 +79,15 @@ export default function Results({
       <div className="mx-auto grid w-full max-w-6xl justify-center gap-6 md:grid-cols-2">
         {otherServices.map((service) => (
           <ResultCard
-  key={service}
-  name={service}
-  isFavorite={isFavorite(service)}
-  toggleFavorite={toggleFavorite}
-  availability={availability.find(
-    (item) => item.name === service
-  )}
-/>
+            key={service}
+             name={service}
+            isFavorite={isFavorite(service)}
+            toggleFavorite={toggleFavorite}
+            availability={availability.find(
+            (item) => item.name === service
+             )}
+          />
+
         ))}
       </div>
 
