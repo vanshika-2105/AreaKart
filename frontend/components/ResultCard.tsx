@@ -8,7 +8,7 @@ interface Props {
   isFavorite: boolean;
   toggleFavorite: (app: string) => void;
   availability?: Availability;
-  url?: string;
+  
 }
 interface Availability {
   name: string;
@@ -37,7 +37,7 @@ export default function ResultCard({
   }
 
   return (
-    <div className="w-full rounded-3xl border border-gray-200 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-slate-700 dark:bg-slate-800">
+    <div className="flex h-full w-full flex-col rounded-3xl border border-gray-200 bg-white p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-slate-700 dark:bg-slate-800">
 
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
@@ -137,80 +137,83 @@ export default function ResultCard({
         </div>
       </div>
 
-      {/* Footer */}
-<div className="mt-6 flex flex-col gap-3">
+            {/* Footer */}
+      <div className="mt-6 flex flex-col gap-3">
 
-  {/* Availability Status */}
-  {availability?.status === "verified" ? (
-    <div className="rounded-2xl border border-green-200 bg-green-50 px-5 py-4">
-      <div className="font-semibold text-green-700">
-        ✅ Verified Available
+        {/* Availability Status */}
+        {availability?.status === "verified" ? (
+          <div className="rounded-2xl border border-green-200 bg-green-50 px-5 py-4">
+            <div className="font-semibold text-green-700">
+              ✅ Verified Available
+            </div>
+
+            <p className="mt-1 text-sm text-green-600">
+              {availability.verification_level === "pincode"
+                ? "Verified specifically for this PIN code."
+                : availability.message}
+            </p>
+          </div>
+
+        ) : availability?.status === "estimated" ? (
+          <div className="rounded-2xl border border-yellow-200 bg-yellow-50 px-5 py-4">
+            <div className="font-semibold text-yellow-700">
+              ⚠️ Estimated Availability
+            </div>
+
+            <p className="mt-1 text-sm text-yellow-700">
+              {availability.verification_level === "pincode_coverage"
+                ? "Based on PIN-level coverage data."
+                : availability.verification_level === "city_coverage"
+                ? "Based on city-level coverage data."
+                : availability.message}
+            </p>
+          </div>
+
+        ) : availability?.status === "unavailable" ? (
+          <div className="rounded-2xl border border-red-200 bg-red-50 px-5 py-4">
+            <div className="font-semibold text-red-700">
+              ❌ Unavailable
+            </div>
+
+            <p className="mt-1 text-sm text-red-600">
+              {availability.message}
+            </p>
+          </div>
+
+        ) : (
+          <div className="rounded-2xl border border-gray-200 bg-gray-100 px-5 py-4">
+            <div className="font-semibold text-gray-700">
+              ℹ️ Availability Unknown
+            </div>
+
+            <p className="mt-1 text-sm text-gray-600">
+              {availability?.message ||
+                "No reliable coverage information is available."}
+            </p>
+          </div>
+        )}
+
+        {/* Open App */}
+        {availability?.url ? (
+          <a
+            href={availability.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-xl bg-green-600 px-6 py-3 text-center font-semibold text-white transition hover:bg-green-700"
+          >
+            Open {name}
+          </a>
+        ) : (
+          <button
+            type="button"
+            disabled
+            className="cursor-not-allowed rounded-xl bg-gray-400 px-6 py-3 text-center font-semibold text-white"
+          >
+            App Link Unavailable
+          </button>
+        )}
+
       </div>
-
-      <p className="mt-1 text-sm text-green-600">
-        {availability.verification_level === "pincode"
-          ? "Verified specifically for this PIN code."
-          : availability.message}
-      </p>
     </div>
-
-  ) : availability?.status === "estimated" ? (
-    <div className="rounded-2xl border border-yellow-200 bg-yellow-50 px-5 py-4">
-      <div className="font-semibold text-yellow-700">
-        ⚠️ Estimated Availability
-      </div>
-
-      <p className="mt-1 text-sm text-yellow-700">
-        {availability.verification_level === "pincode_coverage"
-          ? "Based on PIN-level coverage data."
-          : availability.verification_level === "city_coverage"
-          ? "Based on city-level coverage data."
-          : availability.message}
-      </p>
-    </div>
-
-  ) : availability?.status === "unavailable" ? (
-    <div className="rounded-2xl border border-red-200 bg-red-50 px-5 py-4">
-      <div className="font-semibold text-red-700">
-        ❌ Unavailable
-      </div>
-
-      <p className="mt-1 text-sm text-red-600">
-        {availability.message}
-      </p>
-    </div>
-
-  ) : (
-    <div className="rounded-2xl border border-gray-200 bg-gray-100 px-5 py-4">
-      <div className="font-semibold text-gray-700">
-        ℹ️ Availability Unknown
-      </div>
-
-      <p className="mt-1 text-sm text-gray-600">
-        {availability?.message ||
-          "No reliable coverage information is available."}
-      </p>
-    </div>
-  )}
-
-  {/* Open App */}
-  {availability?.url ? (
-    <a
-      href={availability.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="rounded-xl bg-green-600 px-6 py-3 text-center font-semibold text-white transition hover:bg-green-700"
-    >
-      Open {name}
-    </a>
-  ) : (
-    <button
-      type="button"
-      disabled
-      className="cursor-not-allowed rounded-xl bg-gray-400 px-6 py-3 text-center font-semibold text-white"
-    >
-      App Link Unavailable
-    </button>
-  )}
-
-</div>
+  );
+}

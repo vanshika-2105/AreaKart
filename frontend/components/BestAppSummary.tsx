@@ -37,7 +37,7 @@ export default function BestAppSummary({ services }: Props) {
   })[0];
 
   return (
-    <div className="w-full max-w-4xl rounded-3xl border border-yellow-300 bg-yellow-50 p-6 shadow-lg transition-all duration-300 dark:border-yellow-700 dark:bg-slate-800">
+    <div className="mx-auto w-full max-w-4xl rounded-3xl border border-yellow-300 bg-yellow-50 p-6 shadow-lg transition-all duration-300 dark:border-yellow-700 dark:bg-slate-800">
       <h2 className="mb-8 text-center text-3xl font-bold text-gray-900 dark:text-white dark:text-white">
         🏆 Best App Summary
       </h2>

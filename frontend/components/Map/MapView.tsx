@@ -3,7 +3,7 @@
 import "leaflet/dist/leaflet.css";
 import toast from "react-hot-toast";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   MapContainer,
@@ -52,14 +52,12 @@ function MapController({
 }) {
   const map = useMap();
 
-  map.flyTo(
-    [latitude, longitude],
-    15,
-    {
+  useEffect(() => {
+    map.flyTo([latitude, longitude], 15, {
       animate: true,
       duration: 1.5,
-    }
-  );
+    });
+  }, [map, latitude, longitude]);
 
   return null;
 }
@@ -142,23 +140,41 @@ export default function MapView({
 
 
       (error) => {
+  console.error("Geolocation error:", error);
 
-        console.error(
-          "Geolocation error:",
-          error
-        );
-
-
-        toast.error(
-          "Unable to access your location. Please allow location permission.",
-          {
-            id: "location",
-          }
-        );
-      },
-
-
+  if (error.code === 1) {
+    toast.error(
+      "Location permission was denied. Please allow location access and try again.",
       {
+        id: "location",
+      }
+    );
+  } else if (error.code === 2) {
+    toast.error(
+      "We couldn't determine your location. Please try again.",
+      {
+        id: "location",
+      }
+    );
+  } else if (error.code === 3) {
+    toast.error(
+      "Location request timed out. Please try again.",
+      {
+        id: "location",
+      }
+    );
+  } else {
+    toast.error(
+      "Unable to determine your location. Please try again.",
+      {
+        id: "location",
+      }
+    );
+  }
+},
+
+
+     {
         enableHighAccuracy: true,
         timeout: 15000,
         maximumAge: 0,

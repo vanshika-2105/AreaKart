@@ -1,8 +1,32 @@
 const API_URL = "http://127.0.0.1:8000";
 
+const REQUEST_TIMEOUT = 10000;
+
+async function fetchWithTimeout(
+  url: string,
+  options: RequestInit,
+  timeout = REQUEST_TIMEOUT
+) {
+  const controller = new AbortController();
+
+  const timeoutId = setTimeout(() => {
+    controller.abort();
+  }, timeout);
+
+  try {
+    return await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+
 export async function searchPincode(pincode: string) {
   try {
-    const response = await fetch(`${API_URL}/search`, {
+    const response = await fetchWithTimeout(`${API_URL}/search`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,17 +46,39 @@ export async function searchPincode(pincode: string) {
       throw new Error(
         data.detail ||
           data.message ||
-          "Something went wrong. Please try again."
+          "Unable to process your request. Please try again."
       );
     }
 
     return data;
+
   } catch (error) {
+
+    if (
+      error instanceof DOMException &&
+      error.name === "AbortError"
+    ) {
+      throw new Error(
+        "The request took too long. Please try again."
+      );
+    }
+
+    if (
+      error instanceof TypeError &&
+      error.message === "Failed to fetch"
+    ) {
+      throw new Error(
+        "Unable to connect to AreaKart. Please check your internet connection or make sure the server is running."
+      );
+    }
+
     if (error instanceof Error) {
       throw error;
     }
 
-    throw new Error("Unable to connect to Areakart.");
+    throw new Error(
+      "Something went wrong. Please try again."
+    );
   }
 }
 
@@ -42,7 +88,22 @@ export async function sendLocation(
   longitude: number
 ) {
   try {
-    const response = await fetch(`${API_URL}/location`, {
+
+    // Validate coordinates before sending them
+    if (
+      !Number.isFinite(latitude) ||
+      !Number.isFinite(longitude) ||
+      latitude < -90 ||
+      latitude > 90 ||
+      longitude < -180 ||
+      longitude > 180
+    ) {
+      throw new Error(
+        "We couldn't determine a valid location. Please try again."
+      );
+    }
+
+    const response = await fetchWithTimeout(`${API_URL}/location`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,11 +125,33 @@ export async function sendLocation(
     }
 
     return data;
+
   } catch (error) {
+
+    if (
+      error instanceof DOMException &&
+      error.name === "AbortError"
+    ) {
+      throw new Error(
+        "The location request took too long. Please try again."
+      );
+    }
+
+    if (
+      error instanceof TypeError &&
+      error.message === "Failed to fetch"
+    ) {
+      throw new Error(
+        "Unable to connect to AreaKart. Please check your internet connection or make sure the server is running."
+      );
+    }
+
     if (error instanceof Error) {
       throw error;
     }
 
-    throw new Error("Unable to connect to Areakart.");
+    throw new Error(
+      "Unable to determine your location. Please try again."
+    );
   }
 }

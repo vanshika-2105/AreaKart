@@ -10,6 +10,7 @@ interface Availability {
   verification_method: string;
   status: string;
   confidence: string;
+  verification_level: string;
   message: string;
   url?: string;
 }
@@ -76,14 +77,14 @@ export default function Results({
 
       <DeliveryInsights services={services} />
 
-      <div className="mx-auto grid w-full max-w-6xl justify-center gap-6 md:grid-cols-2">
-        {otherServices.map((service) => (
-          <ResultCard
-            key={service}
-             name={service}
-            isFavorite={isFavorite(service)}
-            toggleFavorite={toggleFavorite}
-            availability={availability.find(
+      <div className="mx-auto grid w-full max-w-6xl grid-cols-1 items-stretch gap-6 md:grid-cols-2">
+          {otherServices.map((service) => (
+            <ResultCard
+              key={service}
+              name={service}
+              isFavorite={isFavorite(service)}
+              toggleFavorite={toggleFavorite}
+              availability={availability?.find(
             (item) => item.name === service
              )}
           />
