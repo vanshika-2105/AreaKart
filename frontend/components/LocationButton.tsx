@@ -39,7 +39,6 @@ export default function LocationButton({
           );
 
           onLocationFound?.(result);
-
         } catch (error) {
           console.warn(
             "Location API error:",
@@ -90,8 +89,11 @@ export default function LocationButton({
   };
 
   return (
-    <button onClick={getLocation}>
-      📍 Use My Current Location
+    <button
+      onClick={getLocation}
+      className="rounded-xl bg-blue-600 px-6 py-3 text-lg font-semibold text-white shadow-md transition-all duration-300 hover:bg-blue-700 hover:shadow-lg active:scale-95"
+    >
+      📍 Locate Me
     </button>
   );
 }
