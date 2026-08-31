@@ -35,15 +35,18 @@ export default function SearchBar({
 }: Props)  {
   const [pincode, setPincode] = useState(initialPincode);
   const [services, setServices] = useState<string[]>([]);
-  const [availability, setAvailability] = useState<
+ const [availability, setAvailability] = useState<
   {
     name: string;
     type: string;
     verification_method: string;
     status: string;
+    confidence: string;
+    verification_level: string;
+    message: string;
+    url?: string;
   }[]
->([]);
-  const [sortBy, setSortBy] = useState<
+>([]);  const [sortBy, setSortBy] = useState<
   "default" | "rating" | "eta" | "fee"
 >("default");
   const [filters, setFilters] = useState({
@@ -257,7 +260,7 @@ if (filters.eta15) {
           📍 {location.city}, {location.state}
         </p>
 
-        <p className="text-gray-600 dark:text-gray-400 dark:text-gray-300">
+        <p className="text-gray-600 dark:text-gray-300">
           PIN: {location.pincode}
         </p>
       </div>

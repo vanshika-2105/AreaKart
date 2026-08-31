@@ -12,9 +12,9 @@ export default function SearchHistory({
   if (history.length === 0) return null;
 
   return (
-    <div className="mt-8 w-full max-w-lg rounded-2xl border border-gray-200 bg-white dark:bg-slate-800 p-5 shadow-md transition-all duration-300 dark:border-slate-700 dark:bg-slate-800">
+    <div className="mt-8 w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-5 shadow-md transition-all duration-300 dark:border-slate-700 dark:bg-slate-800">
       <div className="mb-4 flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white dark:text-white">
+        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
           🕘 Recent Searches
         </h3>
 

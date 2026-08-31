@@ -21,7 +21,7 @@ export default function Hero() {
       </h2>
 
       {/* Description */}
-      <p className="mt-8 max-w-3xl text-lg leading-8 text-gray-600 dark:text-gray-400 transition-colors duration-300 dark:text-gray-300">
+      <p className="mt-8 max-w-3xl text-lg leading-8 text-gray-600 dark:text-gray-300 transition-colors duration-300">
         Areakart helps you instantly discover which instant delivery
         services are available in your location. Search any PIN code
         to compare Blinkit, Zepto, Instamart, BigBasket, JioMart,

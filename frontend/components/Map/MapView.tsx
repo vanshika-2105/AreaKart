@@ -140,7 +140,7 @@ export default function MapView({
 
 
       (error) => {
-  console.error("Geolocation error:", error);
+  console.warn("Geolocation permission was denied.");
 
   if (error.code === 1) {
     toast.error(

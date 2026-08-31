@@ -38,17 +38,17 @@ export default function BestAppSummary({ services }: Props) {
 
   return (
     <div className="mx-auto w-full max-w-4xl rounded-3xl border border-yellow-300 bg-yellow-50 p-6 shadow-lg transition-all duration-300 dark:border-yellow-700 dark:bg-slate-800">
-      <h2 className="mb-8 text-center text-3xl font-bold text-gray-900 dark:text-white dark:text-white">
+      <h2 className="mb-8 text-center text-3xl font-bold text-gray-900 dark:text-white">
         🏆 Best App Summary
       </h2>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
 
         {/* Fastest */}
-        <div className="rounded-2xl bg-white dark:bg-slate-800 p-6 text-center shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-700">
+        <div className="rounded-2xl bg-white  p-6 text-center shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-700">
           <p className="text-4xl">⚡</p>
 
-          <h3 className="mt-3 text-lg font-bold text-gray-900 dark:text-white dark:text-white">
+          <h3 className="mt-3 text-lg font-bold text-gray-900 dark:text-white">
             Fastest
           </h3>
 
@@ -56,16 +56,16 @@ export default function BestAppSummary({ services }: Props) {
             {fastest.name}
           </p>
 
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
             ETA: {fastest.eta}
           </p>
         </div>
 
         {/* Highest Rated */}
-        <div className="rounded-2xl bg-white dark:bg-slate-800 p-6 text-center shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-700">
+        <div className="rounded-2xl bg-white p-6 text-center shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-700">
           <p className="text-4xl">⭐</p>
 
-          <h3 className="mt-3 text-lg font-bold text-gray-900 dark:text-white dark:text-white">
+          <h3 className="mt-3 text-lg font-bold text-gray-900 dark:text-white">
             Highest Rated
           </h3>
 
@@ -73,16 +73,16 @@ export default function BestAppSummary({ services }: Props) {
             {highestRated.name}
           </p>
 
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
             Rating: {highestRated.rating}
           </p>
         </div>
 
         {/* Cheapest */}
-        <div className="rounded-2xl bg-white dark:bg-slate-800 p-6 text-center shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-700">
+        <div className="rounded-2xl bg-white p-6 text-center shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl dark:bg-slate-700">
           <p className="text-4xl">💰</p>
 
-          <h3 className="mt-3 text-lg font-bold text-gray-900 dark:text-white dark:text-white">
+          <h3 className="mt-3 text-lg font-bold text-gray-900 dark:text-white ">
             Cheapest
           </h3>
 
@@ -90,7 +90,7 @@ export default function BestAppSummary({ services }: Props) {
             {cheapest.name}
           </p>
 
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
             Fee: {cheapest.deliveryFee}
           </p>
         </div>

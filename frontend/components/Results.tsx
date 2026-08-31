@@ -61,7 +61,7 @@ export default function Results({
   );
 
   return (
-    <section className="mt-12 space-y-8">
+    <section className="mt-12 w-full max-w-full min-w-0 space-y-8 overflow-x-hidden">
 
       <FavoritesSection
         favorites={favoriteServices}
@@ -77,7 +77,7 @@ export default function Results({
 
       <DeliveryInsights services={services} />
 
-      <div className="mx-auto grid w-full max-w-6xl grid-cols-1 items-stretch gap-6 md:grid-cols-2">
+      <div className="mx-auto grid w-full max-w-6xl min-w-0 grid-cols-1 items-stretch gap-6 md:grid-cols-2">
           {otherServices.map((service) => (
             <ResultCard
               key={service}

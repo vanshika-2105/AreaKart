@@ -14,11 +14,11 @@ export default function FavoritesSection({
   if (favorites.length === 0) {
     return (
       <section className="mb-10 rounded-3xl border border-dashed border-gray-300 bg-gray-50 p-8 text-center transition-all duration-300 dark:border-slate-700 dark:bg-slate-800">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white dark:text-white">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
           ❤️ Favorite Apps
         </h2>
 
-        <p className="mt-3 text-gray-500 dark:text-gray-400 dark:text-gray-300">
+        <p className="mt-3 text-gray-500 dark:text-gray-300">
           You haven't added any favorite apps yet.
         </p>
 
@@ -31,7 +31,7 @@ export default function FavoritesSection({
 
   return (
     <section className="mb-10">
-      <h2 className="mb-6 text-center text-3xl font-bold text-gray-900 dark:text-white dark:text-white">
+      <h2 className="mb-6 text-center text-3xl font-bold text-gray-900 dark:text-white">
         ❤️ Favorite Apps ({favorites.length})
       </h2>
 

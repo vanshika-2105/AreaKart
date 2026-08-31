@@ -43,15 +43,16 @@ export default function DeliveryInsights({ services }: Props) {
   else if (services.length >= 2) coverage = "Average";
 
   return (
-    <div className="mt-8 rounded-3xl border border-gray-200 bg-white dark:bg-slate-800 p-6 shadow-lg transition-all duration-300 dark:border-slate-700 dark:bg-slate-800">
-      <h2 className="mb-6 text-3xl font-bold text-gray-900 dark:text-white dark:text-white">
+    <div className="mt-8 w-full max-w-full rounded-3xl border border-gray-200 bg-white p-4 shadow-lg transition-all duration-300 dark:border-slate-700 dark:bg-slate-800 sm:p-6">
+
+      <h2 className="mb-6 text-center text-2xl font-bold text-gray-900 dark:text-white sm:text-left sm:text-3xl">
         📊 Delivery Insights
       </h2>
 
-      <div className="grid gap-5 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-2 md:gap-5">
 
         <div className="rounded-2xl bg-gray-100 p-5 text-center transition-all duration-300 hover:shadow-lg dark:bg-slate-700">
-          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             Apps Available
           </p>
 
@@ -61,7 +62,7 @@ export default function DeliveryInsights({ services }: Props) {
         </div>
 
         <div className="rounded-2xl bg-gray-100 p-5 text-center transition-all duration-300 hover:shadow-lg dark:bg-slate-700">
-          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             Coverage
           </p>
 
@@ -71,7 +72,7 @@ export default function DeliveryInsights({ services }: Props) {
         </div>
 
         <div className="rounded-2xl bg-gray-100 p-5 text-center transition-all duration-300 hover:shadow-lg dark:bg-slate-700">
-          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             🏆 Best Rated
           </p>
 
@@ -79,13 +80,13 @@ export default function DeliveryInsights({ services }: Props) {
             {bestRated.name}
           </p>
 
-          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             ⭐ {bestRated.rating}
           </p>
         </div>
 
         <div className="rounded-2xl bg-gray-100 p-5 text-center transition-all duration-300 hover:shadow-lg dark:bg-slate-700">
-          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             ⚡ Fastest
           </p>
 
@@ -93,13 +94,13 @@ export default function DeliveryInsights({ services }: Props) {
             {fastest.name}
           </p>
 
-          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             {fastest.eta}
           </p>
         </div>
 
         <div className="rounded-2xl bg-gray-100 p-5 text-center transition-all duration-300 hover:shadow-lg dark:bg-slate-700 md:col-span-2">
-          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             💰 Cheapest
           </p>
 
@@ -107,7 +108,7 @@ export default function DeliveryInsights({ services }: Props) {
             {cheapest.name}
           </p>
 
-          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-300">
+          <p className="text-sm text-gray-500 dark:text-gray-300">
             {cheapest.deliveryFee}
           </p>
         </div>
