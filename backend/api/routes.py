@@ -1,3 +1,10 @@
+from ai.agent import run_agent
+from ai.schemas import (
+    AIRecommendationRequest,
+    AIRecommendationResponse,
+)
+
+
 from fastapi import APIRouter
 
 from schemas.search_schema import SearchRequest
@@ -71,4 +78,14 @@ def location(request: LocationRequest):
         services=result.get("services", []),
         availability=result.get("availability", []),
         message="Current location detected successfully."
+    )
+@router.post(
+    "/ai/recommend",
+    response_model=AIRecommendationResponse
+)
+def ai_recommend(request: AIRecommendationRequest):
+
+    return run_agent(
+        message=request.message,
+        pincode=request.pincode,
     )
