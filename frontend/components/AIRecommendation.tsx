@@ -250,10 +250,13 @@ export default function AIRecommendation({
     }
   }
 
-  const confidencePercent = result
-    ? Math.round(result.confidence * 100)
-    : 0;
+  const hasRecommendation = Boolean(
+  result?.recommendation?.trim()
+);
 
+const confidencePercent = result
+  ? Math.round(result.confidence * 100)
+  : 0;
   return (
     <section
       id="ai-agent"
@@ -389,14 +392,16 @@ export default function AIRecommendation({
                   <div>
                     <div className="mb-2 flex items-center gap-2">
                       <span className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-green-600 dark:text-green-400">
-                        <ZapIcon />
-                        Best match
+                      <ZapIcon />
+                        {hasRecommendation ? "Best match" : "No verified match"}
                       </span>
                     </div>
 
                     <h3 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white md:text-4xl">
-                      {result.recommendation}
-                    </h3>
+                      {hasRecommendation
+                          ? result.recommendation
+    :                           "No verified recommendation"}
+</h3>
 
                     <p className="mt-3 max-w-3xl text-sm leading-6 text-gray-600 dark:text-gray-400 md:text-base">
                       {result.reason}
@@ -420,8 +425,7 @@ export default function AIRecommendation({
                         className="h-full rounded-full bg-green-500 transition-all duration-700"
                         style={{
                           width: `${confidencePercent}%`,
-                        }}
-                      />
+                        }}                          />
                     </div>
                   </div>
                 </div>
