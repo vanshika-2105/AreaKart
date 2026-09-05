@@ -21,6 +21,20 @@ SERVICE_COVERAGE = {
             "confidence": "medium",
         },
     },
+    "250002": {
+        "Blinkit": {
+            "status": "estimated",
+            "confidence": "medium",
+        },
+        "Instamart": {
+            "status": "estimated",
+            "confidence": "medium",
+        },
+        "BigBasket": {
+            "status": "estimated",
+            "confidence": "medium",
+        },
+    },
 
     "400001": {
         "Blinkit": {

@@ -28,10 +28,12 @@ const MapView = dynamic(
 
 interface Props {
   initialPincode?: string;
+   onPincodeChange?: (pincode: string) => void;
 }
 
 export default function SearchBar({
   initialPincode = "",
+  onPincodeChange,
 }: Props)  {
   const [pincode, setPincode] = useState(initialPincode);
   const [services, setServices] = useState<string[]>([]);
@@ -109,7 +111,7 @@ if (searchPin.length !== 6) {
       setError("");
 
       setPincode(searchPin);
-
+      onPincodeChange?.(searchPin);
 setLocation({
   city: data.city,
   state: data.state,

@@ -13,3 +13,4 @@ class AIRecommendationResponse(BaseModel):
     alternatives: list[str]
     intent: str
     preference: str
+    agent_steps: list[dict]
