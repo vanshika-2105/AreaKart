@@ -12,14 +12,15 @@ app = FastAPI(
 )
 
 
-frontend_url = os.getenv("FRONTEND_URL")
-
 allowed_origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "https://areakart-frontend-production.up.railway.app",
 ]
 
-if frontend_url:
+frontend_url = os.getenv("FRONTEND_URL")
+
+if frontend_url and frontend_url not in allowed_origins:
     allowed_origins.append(frontend_url)
 
 
